@@ -1,55 +1,59 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Model;
-import java.util.Properties;
-import javax.mail.*;
-import javax.mail.internet.*;
 
-/**
- *
- * @author Sasinima
- */
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 public class EmailUtil {
-    public static int sendEmail(String Email,String Token){
-     
-        final String fromEmail = "thevindusiriwardana@gmail.com"; 
-        final String password = "tdSiriwar0712656174";        
-        String Email_subject = "Account Recovery code";
-        String Email_Body = "Your Account recovery code is" +Token;
-        Properties properties = new Properties();
-        properties.put("mail.smtp.host", "smtp.gmail.com"); 
-        properties.put("mail.smtp.port", "587");            
-        properties.put("mail.smtp.auth", "true");         
-        properties.put("mail.smtp.starttls.enable", "true");
+    public int sendEmail(String email, String token) throws AddressException, MessagingException {
+       String Email = email;
+       String Email_Token = token;
+       String Email_subject = "No reply email account recovery";
+       String Email_Body = "This is the code for your verification code"+ Email_Token ;
+       final String host = "localhost"; 
+       final int port = 25; 
+       final String username = "test"; 
+       final String password = "test"; 
 
         
-        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+        Properties properties = new Properties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", port);
+        properties.put("mail.smtp.auth", "true");
+        
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
+                return new PasswordAuthentication(username, password);
             }
-        });
-
-        try {
-           
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(fromEmail)); 
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Email)); 
-            message.setSubject(Email_subject); 
+        }
+        );
+        
+        Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username + "@" + host));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Email));
+            message.setSubject(Email_subject);
             message.setText(Email_Body);
-
-           
+            
+        try{
             Transport.send(message);
             System.out.println("Email sent successfully!");
             
-            return 1;
-
-        } catch (MessagingException e) {
             
+            
+        }
+        catch(MessagingException e){
+            e.printStackTrace();
             return 0;
         }
-    }
+        
+        return 1;
 }
-
+}

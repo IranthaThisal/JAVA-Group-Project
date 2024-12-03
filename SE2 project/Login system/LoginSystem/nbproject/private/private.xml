@@ -3,24 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/js/RegisterJS.js</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/js/LogingJS.js</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Controller/SignUpservlet.java</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Account_Recovery_PasswordUpdate_DBhandler.java</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Account_RecoveryDBhandler.java</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Customer_RegisterDBhandler.java</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Customer_LoginDBhandler.java</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Controller/Account_RecoveryServlet.java</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Controller/RegisterServlet.java</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/SmsUtil.java</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Controller/Account_Recovery_PasswordUpdate.java</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/DBconnection.java</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/Register.jsp</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/Account_Recovery.jsp</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/EmailUtil.java</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Account_RecoveryDBhandler.java</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Customer_LoginDBhandler.java</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/index.html</file>
             <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/SignUp.jsp</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/Dashborad.jsp</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/Account_Recovery_Verification.jsp</file>
-            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/web/css/LoginStyle.css</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Model/Account_RecoveryCode_Verification.java</file>
+            <file>file:/C:/Users/Sasinima/Downloads/SE2%20project/Login%20system/LoginSystem/src/java/Controller/Account_Recoverycode_VerificationServlet.java</file>
         </group>
     </open-files>
 </project-private>

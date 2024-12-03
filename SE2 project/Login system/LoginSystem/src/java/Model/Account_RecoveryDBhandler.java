@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
+import javax.mail.MessagingException;
 
 /**
  *
@@ -20,7 +21,7 @@ public class Account_RecoveryDBhandler {
           return java.util.UUID.randomUUID().toString(); 
 }
 
-    public int AR_DBhandler(String ACCemail,String ACCconNumber) throws ClassNotFoundException, SQLException{
+    public int AR_DBhandler(String ACCemail,String ACCconNumber) throws ClassNotFoundException, SQLException, MessagingException{
         String DBaccEmail = ACCemail;
         String DBaccConnum = ACCconNumber;
         int Email_Status = -1;
@@ -54,26 +55,23 @@ public class Account_RecoveryDBhandler {
             if (Email_Status == 1){
                  int Istatus = st2.executeUpdate();
                  if (Istatus == 1){
-                    return 1;
+                    return 1;//E1_DB1_Auth1_ERR0
                 }
                 else{
-                    return 2;
+                    return 2;//E1_DB0_Auth1_ERR0
                 }
             }
             
             else if(Email_Status == 0){
-                return 3;
+                return 3;//E0_DB0_Auth1_ERR0
             }
             
             else{
-                return 4;
-            }
-            
-            
-           
+                return 4;//E0_DB0_Auth1_ERR1
+            }       
     }
     else{
-       return 5;
+       return 5;//E0_DB0_Auth0_ERR0
     }
 }   
 
