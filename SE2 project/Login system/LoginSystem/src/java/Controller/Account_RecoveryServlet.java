@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
+import javax.mail.MessagingException;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -82,16 +84,46 @@ public class Account_RecoveryServlet extends HttpServlet {
         response.setContentType("text/html");
         String ACCemail=request.getParameter("email");
         String ACCconNumber=request.getParameter("ConNumber");
-        int status = -1;
+        int stat;
         String recovery_status = null;
         Account_RecoveryDBhandler objAccount_RecoveryDBhandler = new Account_RecoveryDBhandler();
         try {
-            status = objAccount_RecoveryDBhandler.AR_DBhandler(ACCemail, ACCconNumber);            
-            response.setStatus(status);
-            response.sendRedirect( "./Account_Recovery_Verification.jsp");
+            stat = objAccount_RecoveryDBhandler.AR_DBhandler(ACCemail, ACCconNumber); 
+            System.out.println("#status" + stat);
+        switch(stat){
+            case 1:
+                response.getWriter().println(
+                      "<h1>Recovery code has been successfully sent to your email.</h1><br>" +
+                      "<form action='Account_Recoverycode_VerificationServlet' method='Post'>" +
+                      "Recovery Code: <input type='text' name='Recovery_code'><br>" +
+                      "<input type='hidden' name='Cemail' value='" + ACCemail + "'>" +
+                      "<input type='hidden' name='Cemail' value='" + ACCemail + "'>" +
+                      "<input type='submit' name='submit' value='Recover'>" +
+                      "</form>"
+                          );
+            break;
+            case 2:
+                response.getWriter().println("</h1>Email has successfully sent. Database error.E1_DB0_Auth1_ERR0</h1>");
+             break;
+            case 3:
+                response.getWriter().println("<h1>Email has not successfully sent.E0_DB0_Auth1_ERR0</h1>");
+             break;
+            case 4:
+                response.getWriter().println("<h1>Error!Email sending error.E0_DB0_Auth1_ERR1");
+             break;
+            case 5:
+               response.getWriter().println("<h1>Error in the process.E0_DB0_Auth0_ERR0</h1>");
+             break;
+            default:
+               response.getWriter().println("<h1>Unexpected error.</h1>");
+             }
+        
+            
             } catch (ClassNotFoundException ex) {
             Logger.getLogger(Account_RecoveryServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Logger.getLogger(Account_RecoveryServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MessagingException ex) {
             Logger.getLogger(Account_RecoveryServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
          

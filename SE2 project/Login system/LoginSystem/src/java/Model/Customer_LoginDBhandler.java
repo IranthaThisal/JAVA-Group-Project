@@ -31,12 +31,13 @@ public class Customer_LoginDBhandler {
         st.setString(1, DBLoguname);
         
         ResultSet rs=st.executeQuery();
-        
+      
         while(rs.next()){
            DBRusername = rs.getString("Username");
            DBRpassword = rs.getString("Password");
            
-    }
+         }
+       
         System.out.println(DBLogpswd);
         System.out.println(DBRpassword);
         if(DBRusername != null && DBRpassword != null){
