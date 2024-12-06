@@ -905,7 +905,6 @@ section .movie-ticket-book button{
 <header>
     <nav>
     <p class="logo">
-      ABC<span>Cinema<span>
     </p>
       
       <i class="fa fa-bars" id="menu"></i>
@@ -913,5 +912,339 @@ section .movie-ticket-book button{
     <ul id="menu-box">
       <div class="marker"></div>
       <li>Main</li>
+      
+     <%
+       HttpSession session1 = request.getSession(false);
+    String x;
+    String link;
+    String link1;
+    String u_name;
+    
+      if (session1 == null || session1.getAttribute("user_id") == null) {
+        x = "Login"; 
+        link = "user_login.jsp";
+        link1 = "user_login.jsp";
+        u_name = "";
+    }
+    else{
+          
+    Integer userId = (Integer) session1.getAttribute("user_id");
+    String user_name = (String) session1.getAttribute("user_name");
+     x = "Logout"; 
+     link = "user_logout.jsp";
+     link1 = "order.jsp";
+     u_name = "Hi ,"+ user_name;
+          }
+    
+    %>
+    
+       <li><b><a href="<%= link1 %>" style="text-decoration:none;color:white;">Bookings</b></a></li>
+      <li><%= u_name %></li>
+      <li><b><a href="<%= link %>" style="text-decoration:none;color:red;"><%= x %></b></a></li>
+    </ul>
+      
+  </nav>
+               <%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                String card_id_para = request.getParameter("card_id");
+                
+                String query1;
+                PreparedStatement ps1;
+                 if(card_id_para == null){
+                    query1 = "SELECT * FROM movie LIMIT 1";
+                    ps1 = conn.prepareStatement(query1);
+                   }
+                   else{
+                    int card_id = Integer.parseInt(card_id_para);
+                    query1 = "SELECT * FROM movie WHERE movie_id = ?";
+                    ps1 = conn.prepareStatement(query1);
+                    ps1.setInt(1, card_id);
+                   }
+                    ResultSet result = ps1.executeQuery();
+                
+                
+                while(result.next()){
+                String image = result.getString("image");
+                String trailer = result.getString("trailer");
+                String name = result.getString("name");
+                String title = result.getString("title");
+                String date = result.getString("date");
+                String release = result.getString("release_date");
+                String description = result.getString("description");
+                String duration = result.getString("duration");
+                String imdb = result.getString("imdb");
+                String movie_id = result.getString("movie_id");
+                String time = result.getString("time");
+
+%>  
+    <div class="popular-movie-slider">
+      
+      <img src=<%= request.getContextPath() + "/"+image %> class="poster">
+      
+      <div class="popular-movie-slider-content">
+        <p class="release"><%= release %></p>
+        <h2 class="movie-name"><%= name %></h2>
+        <ul class="category">
+          <p><%= title %></p>
+        </ul>
+        <p class="desc"><%= description %></p>
+        
+        <div class="movie-info">
+          <i class="fa fa-clock-o"> &nbsp;&nbsp;&nbsp;<span><%= duration %> min.</span></i> 
+          <i class="fa fa-circle"> &nbsp;&nbsp;&nbsp;<span>Imdb: <b><%= imdb %>/10</b></span></i>
+        </div>
+        
+        <div class="movie-btns">
+            <a href="<%= trailer %>" style="text-decoration: none;"> <button><i class="fa fa-play"></i>&nbsp; Watch trailer</button></a>
+          </div>
+        
+      </div>
+      
+    </div>
+    <!---slider--->
+    
+</header>
+
+<section>
+  
+  <div class="movie-ticket-book">
+    <div class="choose-date">
+      <p class="heading">
+        Date And Time :<%= date %> / <%= time %>
+      </p>
+       <div class="wrapper">
+      </div>
+    </div>
+      <a href="booking.jsp?movie_id=<%= movie_id %>"><button>Buy ticket</button></a>
+  </div>
+  <!---movie-ticket-book-->
+  
+ <%
+                   }
+ 
+            }
+            catch (Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+            %>  
+  <div class="filter-search-box">
+    
+    <div class="filters-box">
+      
+      <div class="all-filters filters">
+        All formats <i class="fa fa-angle-down"></i>
+      </div> 
+      
+      <div class="date-filters filters">
+       By Date <i class="fa fa-angle-down"></i>
+      </div> 
+      
+      <div class="category-filters filters">
+        By category <i class="fa fa-angle-down"></i>
+      </div> 
+      
+      <div class="category-filters filters">
+        Coming soon
+      </div> 
+      
+    </div>
+    
+    <div class="search-filters">
+        <input type="text" placeholder="Search by name...">
+        <i class="fa fa-search"></i>
+      </div> 
+    
+    <div class="search-bar">
+      <div class="bar"></div>
+    </div>
+    
+  </div>
+  <!----filter-search-box---->
+  
+  
+  <div class="movie-card-section">
+    
+ <%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                String card_id = request.getParameter("card_id");
+                String query1;
+                PreparedStatement ps1;
+                 
+                    query1 = "SELECT * FROM movie";
+                    ps1 = conn.prepareStatement(query1);
+
+                    ResultSet result = ps1.executeQuery();
+                
+                
+                while(result.next()){
+                String image = result.getString("image");
+                String name = result.getString("name");
+                String date = result.getString("date");
+                String time = result.getString("time");
+                String id = result.getString("movie_id");
+    
+  %>
+  <a href="home_page.jsp?card_id=<%=id%>" style="text-decoration: none;">   
+  <div class="card">
+      <img src=<%= request.getContextPath() + "/"+image %>>
+      
+      <div class="card-content">
+        <p class="movie-name">
+          <%= name %>
+        </p>
+        
+        <div class="movie-info">
+          <p class="time"><span class="d3"></span> <span><%= date %><span class="d3"></span></span> <%= time %></p>
+        </div>
+      </div>
+    </div>
+ </a>     
+    
+ <%
+                   }
+ 
+            }
+            catch (Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+  %>   
+    
+   
+    
+  </div>
+  <!---movie-card--->
+  
+  <div class="show">
+    <div class="show-bar">
+      <div class="bar"></div>
+    </div>
+     <button>Show more</button>
+  </div>
+    <!---bar--->
+  
+  
+</section>
+<div style="margin: 20px; max-width: 500px;display: block;">
+        <h1 style="font-family: Arial, sans-serif;color: #ccc;">Add a Comment</h1>
+        <%
+        Integer userId = (Integer) session1.getAttribute("user_id");
+        %>
+        <form action="submitCommentServlet?user_id=<%= userId %>" method="post">
+            <textarea 
+                name="comment" 
+                rows="5" 
+                style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #fe0000; border-radius: 5px;background-color: #000;color: #ccc;" 
+                placeholder="Write your comment here..." 
+                required>
+            </textarea>
+            <button 
+                type="submit" 
+                style="margin-top: 10px; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #ff000d; border: none; border-radius: 5px; cursor: pointer;">
+                Submit
+            </button>
+        </form>
+    </div>
+<footer>
+  
+  <div class="logo-box">
+    <p class="logo">
+      multi<span>flex</span>
+    </p>
+    <p><i class="fa fa-copyright"></i> 2001-2017, SIA Multiflex</p>
+  </div>
+  
+  <ul>
+    <li>main</li>
+    <li>schedlues</li>
+    <li>tickets</li>
+    <li>news</li>
+    <li>contact</li>
+  </ul>
+
+
+<div class="socail-box">
+  <i class="fa fa-facebook-f"></i>
+  <i class="fa fa-twitter"></i>
+  <i class="fa fa-instagram"></i>
+</div>
+  
+</footer>
+
+<script>
+    //js power
+
+//indicator
+let marker = document.querySelector('.marker');
+let items = document.querySelectorAll('nav ul li');
+
+
+function indicator(e){
+  marker.style.left = e.offsetLeft + "px";
+  marker.style.width = e.offsetWidth + "px";
+}
+
+items.forEach(link =>{
+  link.addEventListener("click",(e)=>{
+    indicator(e.target);
+  })
+})
+
+
+
+//for menu scroll
+let nav = document.querySelector('nav');
+let ul = document.querySelector('nav ul');
+
+window.addEventListener("scroll",()=>{
+  if(window.pageYOffset >= 20){
+    nav.classList.add('nav');
+  }else{
+    nav.classList.remove('nav');
+  }
+  
+    if(window.pageYOffset >= 700){
+    nav.classList.add('navBlack');
+  }else{
+    nav.classList.remove('navBlack');
+  }
+});
+
+
+
+//menu
+let menu = document.querySelector('#menu');
+let menuBx = document.querySelector('#menu-box');
+let a = true;
+
+menu.addEventListener("click",()=>{
+  
+  if(a == true){
+    menuBx.style.display = "block";
+    menu.classList.replace("fa-bars","fa-remove");
+    a = false;
+  }else{
+    menuBx.style.display = "none";
+    menu.classList.replace("fa-remove","fa-bars");
+    a = true;
+  }
+  
+});
+
+
+
+</script>
+
     </body>
 </html>
