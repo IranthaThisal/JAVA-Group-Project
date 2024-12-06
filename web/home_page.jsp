@@ -24,7 +24,7 @@
 <header>
     <nav>
     <p class="logo">
-      multi<span>flex<span>
+      ABC<span>Cinema<span>
     </p>
       
       <i class="fa fa-bars" id="menu"></i>
