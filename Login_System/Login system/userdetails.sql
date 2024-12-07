@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2024 at 04:49 PM
+-- Generation Time: Dec 07, 2024 at 01:44 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `userdetails`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `Admin_ID` int(11) NOT NULL,
+  `Admin_name` text NOT NULL,
+  `Admin_username` text NOT NULL,
+  `Admin_password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`Admin_ID`, `Admin_name`, `Admin_username`, `Admin_password`) VALUES
+(1, 'Admin_test', 'Admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -48,7 +68,7 @@ INSERT INTO `customer` (`Full_Name`, `Email`, `Contact_Number`, `Gender`, `Usern
 ('harry', 'h@gmail.com', '12345678', 'Male', 'harry', 'hh', '23/9/2024', 5),
 ('sasinima', 'sasinimasiriwardana@gmail.com', '123456789', 'Female', 'test', '12', '02/10/2007', 6),
 ('thevindu', 'thevindudilmith2001.gmail.com', '12345', 'Male', 'test2', '123', '02/10/2007', 7),
-('test2', 'test2@localhost', '122221', 'Male', 'test2', '12', '02/10/2007', 8);
+('test2', 'test2@localhost', '122221', 'Male', 'test2', '1234', '02/10/2007', 8);
 
 -- --------------------------------------------------------
 
@@ -132,11 +152,18 @@ INSERT INTO `forgetpassword` (`ID`, `Customer_ID`, `Token`, `ExpeiryTime`) VALUE
 (95, 8, '0c7d2f5c-4a9d-4753-a041-2e72b7009acf', '1733154394026'),
 (96, 8, '01d03751-bafd-455b-9250-658847c9de6e', '1733154929922'),
 (97, 8, '2021de5c-ff7a-4467-9f83-9f7b72b110d7', '1733240584714'),
-(98, 8, '1c8b0ee2-3254-4386-ba32-6cebb5be9986', '1733240660172');
+(98, 8, '1c8b0ee2-3254-4386-ba32-6cebb5be9986', '1733240660172'),
+(99, 8, '8ebcfd39-5901-4fcd-8dd4-ef4649d3b6f4', '1733574639504');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`Admin_ID`);
 
 --
 -- Indexes for table `customer`
@@ -156,6 +183,12 @@ ALTER TABLE `forgetpassword`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `Admin_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
@@ -165,7 +198,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `forgetpassword`
 --
 ALTER TABLE `forgetpassword`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- Constraints for dumped tables
