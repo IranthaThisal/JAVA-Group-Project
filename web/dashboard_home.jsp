@@ -580,8 +580,418 @@ main .recent-orders a{
     color: white; */
 }
 </style>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-    </body>
+   </head>
+<body>
+      
+    <div class="container"> 
+        
+        <!-- ASIDE BAR STARTS HERE  -->
+        <aside>
+            
+
+            <div class="top">
+                <div class="logo">
+                    <h2 style="color:white;">multi<span style="color: red;">flex</span></h2>
+                </div>
+
+                <div class="close" id="close-btn" onclick="closesidebar()">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar" id="sidebar">
+
+                <a href="dashboard_home.jsp" class="active">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                
+                <a href="admin.jsp">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Admins</h3>
+                </a>
+                
+                <a href="booking_dashboard.jsp">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Bookings</h3>
+                </a>
+                <a href="comments.jsp">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Comments</h3>
+                    <span class="message-count">99</span>
+                </a>
+                
+                <a href="movie.jsp">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Movies</h3>
+                </a>
+                <a href="tickets.jsp">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Tickets</h3>
+                </a>
+                <a href="movie_category.jsp">
+                <span class="material-icons-sharp">category</span>
+                    <h3>Movie Categories</h3>
+                </a>
+                <a href="add_movie.jsp">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Add Movie</h3>
+                </a>
+                <a href="add_movie_category.jsp">
+                    <span class="material-icons-sharp">queue</span>
+                    <h3>Add Movie Category</h3>
+                </a>
+                <a href="add_ticket.jsp">
+                    <span class="material-icons-sharp">queue</span>
+                    <h3>Add Movie Tickets</h3>
+                </a>
+                
+                <a href="logout.jsp">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Log out</h3>
+                </a>
+            </div>
+        </aside>
+
+
+
+        <!-- MAIN SECTION STARTS HERE  -->
+        <main>
+            <h1>Dashboard</h1>
+
+            <div class="insights">
+
+                <!-- ====products==== -->
+               
+          
+
+                <div class="product">
+                    <span class="material-icons-sharp">analytics</span>
+                    <div class="middle">
+
+                        <div class="left">
+                            <h2>Movies</h2>
+                            <h3>Add Movies</h3>
+                        </div>
+
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                            <div class="number">
+                                <h3></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted ">Last 24 Hours</small>
+                </div>
+
+                <!-- ====category==== -->
+                
+
+                <div class="category"> 
+                    <span class="material-icons-sharp">bar_chart</span>
+                    <div class="middle">
+
+                        <div class="left">
+                            <h2>Category</h2>
+                            <h3>Add Category</h3>
+                        </div>
+
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36" class="cc"></circle>
+                            </svg>
+                            <div class="number">
+                                <h3></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="text-muted ">Last 24 Hours</small>
+                </div>
+
+                <!-- ====income==== -->
+                <div class="income">
+   
+                    <span class="material-icons-sharp">stacked_line_chart</span>
+                    <div class="middle income-card">
+                        <div class="left">
+                            <h2>$</h2>
+                            <h3>Total Income</h3>
+                        </div>
+
+                    </div>
+                    <small class="text-muted ">Last 24 Hours</small>
+                </div>
+
+            </div>
+
+            <!-- recent orders  -->
+            <div class="recent-orders" >
+                <h2>Recent <span style="color: red;">Bookings</span></h2>
+                <table>
+                    <thead>
+                        <th>Booking Id</th>
+                        <th>Customer</th>
+                        <th>Movie Name</th>
+                        <th>Booking Date</th>
+                        <th>Status</th>
+                    </thead>
+
+                    <tbody>
+
+                    
+                    <%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                //email validation from server
+                String query1 = "SELECT * FROM booking ORDER BY booking_id DESC LIMIT 3";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                
+                ResultSet result = ps1.executeQuery();
+                
+                while(result.next()){
+                String status = result.getString("status");
+                String booking_date = result.getString("booking_date");
+                int user_id = result.getInt("user_id");
+                int movie_id = result.getInt("movie_id");
+                int booking_id = result.getInt("booking_id");
+                
+                  String query2 = "SELECT * FROM users WHERE id = ?";
+                PreparedStatement ps2 = conn.prepareStatement(query2);
+                ps2.setInt(1, user_id);
+                
+                ResultSet result2 = ps2.executeQuery();
+                
+                 if(result2.next()){
+                 
+                 String first_name = result2.getString("first_name");
+                 String last_name = result2.getString("last_name");
+                 
+                      String query3 = "SELECT * FROM movie WHERE movie_id = ?";
+                PreparedStatement ps3 = conn.prepareStatement(query3);
+                ps3.setInt(1, movie_id);
+                
+                ResultSet result3 = ps3.executeQuery();
+                
+                 if(result3.next()){
+                 
+                 String movie_name = result3.getString("name");
+    
+%>
+   
+
+                        <tr style="border:1px solid red;">
+                            <td><%= booking_id %> </td>
+                            <td><%= first_name %> <%= last_name %></td>
+                            <td><%= movie_name %></td>
+                            <td><%= booking_date %></td>
+                            <td><%= status %></td>
+                        </tr>
+
+                        <%
+         
+                            }
+}
+                   }
+ 
+            }
+            catch (Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+%>
+                         
+                            
+
+                    </tbody>
+                </table>
+            </div>
+ 
+        </main>
+        <!-- MAIN SECTION ENDS HERE  -->
+
+
+        <!-- RIGHT SSECTION STARTS HERE  -->
+        <div class="right">
+
+            <!-- ==== top ==== -->
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-icons-sharp">menu</span>
+                </button>
+                 <%
+ 
+          
+             Integer userId = (Integer) session1.getAttribute("user_id");
+             String user_name = (String) session1.getAttribute("user_name");
+             %>
+                <div class="profile">
+                    <div class="info">
+                        <p>Hey, <h3 style="color:red;"><%= user_name %></h3></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="profile-default.png" alt="">
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- ==== Recent Updates ==== -->
+            <div class="recent-updates">
+                <h2>Recent <span style="color: red;">Comments</span></h2>
+                <div class="updates">
+
+                    <%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                //email validation from server
+                String query1 = "SELECT * FROM comments ORDER BY comment_id DESC LIMIT 3";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                
+                ResultSet result = ps1.executeQuery();
+                
+                while(result.next()){
+                String comment = result.getString("comment"); 
+                int user_id = result.getInt("user_id");
+                
+                  String query2 = "SELECT * FROM users WHERE id = ?";
+                PreparedStatement ps2 = conn.prepareStatement(query2);
+                ps2.setInt(1, user_id);
+                
+                ResultSet result2 = ps2.executeQuery();
+                
+                 if(result2.next()){
+                 
+                 String first_name = result2.getString("first_name");
+                 String last_name = result2.getString("last_name");
+    
+%>
+                    <div class="update" style="border-bottom: 1px solid red;">
+                        <div class="profile-photo">
+                            <img src="profile-default.png" alt="">
+                        </div>
+                        <div class="message">
+                            <p><b><%= first_name %> <%= last_name %></b> <%= comment %></p>
+                            <small class="text-muted">2 Minutes Ago</small>
+                        </div>
+                    </div>
+
+      <%
+          }
+                   }
+ 
+            }
+            catch (Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+%>             
+
+                    
+
+                </div>
+            </div>
+
+
+            <!-- === sales Analytics === -->
+            <div class="sales-analytics">
+                <h2>Booking <span style="color:red;">Analytics</span></h2>
+                    <%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                 String query = "SELECT COUNT(*) AS bookingCounts FROM booking";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+               int bookingCounts = 0;
+               if (rs.next()) {
+                   bookingCounts = rs.getInt("bookingCounts");
+                   
+
+                    String query1 = "SELECT COUNT(*) AS customerCounts FROM users";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                ResultSet rs1 = ps1.executeQuery();
+
+               int customerCounts = 0;
+               if (rs1.next()) {
+                   customerCounts = rs1.getInt("customerCounts");
+               
+                
+                 
+    
+%>
+                <div class="item online">
+                    <div class="icon">
+                        <span class="material-icons-sharp">shopping_cart</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>ONLINE ORDERS</h3>
+                            <small class="text-muted">last 24 Hours</small>
+                        </div>
+                        <h5 class="success">+37%</h5>
+                        <h3><%= bookingCounts %></h3>
+                    </div>
+                </div>
+
+                <div class="item offline">
+                    <div class="icon">
+                        <span class="material-icons-sharp">local_mall</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>OFFLINE ORDERS</h3>
+                            <small class="text-muted">last 24 Hours</small>
+                        </div>
+                        <h5 class="danger">0</h5>
+                        <h3>0</h3>
+                    </div>
+                </div>
+
+                <div class="item customers">
+                    <div class="icon">
+                        <span class="material-icons-sharp">person</span>
+                    </div>
+                    <div class="right">
+                        <div class="info">
+                            <h3>All CUSTOMERS</h3>
+                            <small class="text-muted">last 24 Hours</small>
+                        </div>
+                        <h5 class="success">+30%</h5>
+                        <h3><%= customerCounts %></h3>
+                    </div>
+                </div>
+<%
+          }
+                   }
+ 
+            }
+            catch (Exception e) {
+                out.println("Error: " + e.getMessage());
+            }
+%> 
+
+            </div>
+        </div>
+
+    </div>
+    
+
+
+</body>
 </html>
