@@ -300,7 +300,7 @@ main .insights > div:hover{
 }
 
 main .insights > div span{
-    background: var(--color-primary);
+    background: #ff0000;
     padding: 0.5rem;
     border-radius: 50%;
     color: var(--color-white);
@@ -917,7 +917,7 @@ label {
     position:absolute;
     height:40px;
     margin-top:-40px;
-    background-color: rgba(115, 128, 236, 0.5);
+    background-color: #ff0000;
     text-align:center;
     line-height:40px;
     font-size:13px;
@@ -1132,15 +1132,8 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
-    
-}
-
-th, td {
-    border-bottom: 1px solid red;
-}
-</style>
-   </head>
+      </style>
+</head>
 <body>
       
     <div class="container"> 
@@ -1161,7 +1154,7 @@ th, td {
 
             <div class="sidebar" id="sidebar">
 
-                <a href="dashboard_home.jsp" class="active">
+                <a href="dashboard_home.jsp" >
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -1193,7 +1186,7 @@ th, td {
                 <span class="material-icons-sharp">category</span>
                     <h3>Movie Categories</h3>
                 </a>
-                <a href="add_movie.jsp">
+                <a href="add_movie.jsp"class="active">
                     <span class="material-icons-sharp">add</span>
                     <h3>Add Movie</h3>
                 </a>
@@ -1201,11 +1194,10 @@ th, td {
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Category</h3>
                 </a>
-                <a href="add_ticket.jsp">
+                 <a href="add_ticket.jsp">
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Tickets</h3>
                 </a>
-                
                 <a href="logout.jsp">
                     <span class="material-icons-sharp">logout</span>
                     <h3>Log out</h3>
@@ -1214,94 +1206,72 @@ th, td {
         </aside>
 
 
-
-        <!-- MAIN SECTION STARTS HERE  -->
-        <main>
-            <h1>Dashboard</h1>
-
-            <div class="insights">
-
-                <!-- ====products==== -->
-               
-          
-
-                <div class="product">
-                    <span class="material-icons-sharp">analytics</span>
-                    <div class="middle">
-
-                        <div class="left">
-                            <h2>Movies</h2>
-                            <h3>Add Movies</h3>
+            <!-- add products form starts here -->
+            <div class="form-container">
+                <h2>Add Movie</h2>
+                <p>Fill all the required fields below</p>
+                <form action="addMoviServlet" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Movie Name</label>
+                            <input type="text" name="name" id="title" placeholder="Product Title" required>
                         </div>
-
-                        <div class="progress">
-                            <svg>
-                                <circle cx="38" cy="38" r="36"></circle>
-                            </svg>
-                            <div class="number">
-                                <h3></h3>
-                            </div>
-                        </div>
+                        
+                        <div class="column">
+                            <label for="sub-title">Movie Title</label>
+                            <input type="text" name="title" id="sub-title" placeholder="Product sub title">
+                        </div>  
                     </div>
-                    <small class="text-muted ">Last 24 Hours</small>
-                </div>
-
-                <!-- ====category==== -->
-                
-
-                <div class="category"> 
-                    <span class="material-icons-sharp">bar_chart</span>
-                    <div class="middle">
-
-                        <div class="left">
-                            <h2>Category</h2>
-                            <h3>Add Category</h3>
-                        </div>
-
-                        <div class="progress">
-                            <svg>
-                                <circle cx="38" cy="38" r="36" class="cc"></circle>
-                            </svg>
-                            <div class="number">
-                                <h3></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <small class="text-muted ">Last 24 Hours</small>
-                </div>
-
-                <!-- ====income==== -->
-                <div class="income">
-   
-                    <span class="material-icons-sharp">stacked_line_chart</span>
-                    <div class="middle income-card">
-                        <div class="left">
-                            <h2>$</h2>
-                            <h3>Total Income</h3>
-                        </div>
-
-                    </div>
-                    <small class="text-muted ">Last 24 Hours</small>
-                </div>
-
-            </div>
-
-            <!-- recent orders  -->
-            <div class="recent-orders" >
-                <h2>Recent <span style="color: red;">Bookings</span></h2>
-                <table>
-                    <thead>
-                        <th>Booking Id</th>
-                        <th>Customer</th>
-                        <th>Movie Name</th>
-                        <th>Booking Date</th>
-                        <th>Status</th>
-                    </thead>
-
-                    <tbody>
-
                     
-                    <%
+                     <div class="row">
+                        <div class="column">
+                            <label for="title">Release Date</label>
+                            <input type="number" name="release" id="title" placeholder="Product Title" required>
+                        </div> 
+                       <div class="column">
+                            <label for="discount">IMDB</label>
+                            <input type="text" name="imdb"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+                   <div class="row">
+                        <div class="column">
+                            <label for="discount">Location</label>
+                            <input type="text" name="location"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                       <div class="column">
+                            <label for="discount">Duration (minute)</label>
+                            <input type="number" name="duration"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="price">Time</label>
+                            <input type="text" name="time"  min="0" id="price" placeholder="Product Price" required>
+                        </div>
+
+                        <div class="column">
+                            <label for="discount">Date</label>
+                            <input type="text" name="date"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        
+
+                    <div class="column">
+                            <label for="discount">Trailer</label>
+                            <input type="text" name="trailer"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="category">Category</label>
+                            <select name="category" id="category">
+               <%
                 try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1310,248 +1280,97 @@ th, td {
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
                 //email validation from server
-                String query1 = "SELECT * FROM booking ORDER BY booking_id DESC LIMIT 3";
+                String query1 = "SELECT * FROM movie_category";
                 PreparedStatement ps1 = conn.prepareStatement(query1);
                 
                 ResultSet result = ps1.executeQuery();
                 
                 while(result.next()){
-                String status = result.getString("status");
-                String booking_date = result.getString("booking_date");
-                int user_id = result.getInt("user_id");
-                int movie_id = result.getInt("movie_id");
-                int booking_id = result.getInt("booking_id");
-                
-                  String query2 = "SELECT * FROM users WHERE id = ?";
-                PreparedStatement ps2 = conn.prepareStatement(query2);
-                ps2.setInt(1, user_id);
-                
-                ResultSet result2 = ps2.executeQuery();
-                
-                 if(result2.next()){
-                 
-                 String first_name = result2.getString("first_name");
-                 String last_name = result2.getString("last_name");
-                 
-                      String query3 = "SELECT * FROM movie WHERE movie_id = ?";
-                PreparedStatement ps3 = conn.prepareStatement(query3);
-                ps3.setInt(1, movie_id);
-                
-                ResultSet result3 = ps3.executeQuery();
-                
-                 if(result3.next()){
-                 
-                 String movie_name = result3.getString("name");
-    
+                String category = result.getString("category"); 
 %>
-   
+                <option value="<%= category %>"><%= category %></option>
 
-                        <tr style="border:1px solid red;">
-                            <td><%= booking_id %> </td>
-                            <td><%= first_name %> <%= last_name %></td>
-                            <td><%= movie_name %></td>
-                            <td><%= booking_date %></td>
-                            <td><%= status %></td>
-                        </tr>
-
-                        <%
-         
-                            }
-}
-                   }
- 
-            }
-            catch (Exception e) {
-                out.println("Error: " + e.getMessage());
-            }
-%>
-                         
-                            
-
-                    </tbody>
-                </table>
-            </div>
- 
-        </main>
-        <!-- MAIN SECTION ENDS HERE  -->
-
-
-        <!-- RIGHT SSECTION STARTS HERE  -->
-        <div class="right">
-
-            <!-- ==== top ==== -->
-            <div class="top">
-                <button id="menu-btn">
-                    <span class="material-icons-sharp">menu</span>
-                </button>
-                 <%
- 
-          
-             Integer userId = (Integer) session1.getAttribute("user_id");
-             String user_name = (String) session1.getAttribute("user_name");
-             %>
-                <div class="profile">
-                    <div class="info">
-                        <p>Hey, <h3 style="color:red;"><%= user_name %></h3></p>
-                        <small class="text-muted">Admin</small>
-                    </div>
-                    <div class="profile-photo">
-                        <img src="profile-default.png" alt="">
-                    </div>
-                </div>
-            </div>
-            
-
-            <!-- ==== Recent Updates ==== -->
-            <div class="recent-updates">
-                <h2>Recent <span style="color: red;">Comments</span></h2>
-                <div class="updates">
-
-                    <%
-                try {
-                // Load MySQL Driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                
-               // Connect to Database
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
-                
-                //email validation from server
-                String query1 = "SELECT * FROM comments ORDER BY comment_id DESC LIMIT 3";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                
-                ResultSet result = ps1.executeQuery();
-                
-                while(result.next()){
-                String comment = result.getString("comment"); 
-                int user_id = result.getInt("user_id");
-                
-                  String query2 = "SELECT * FROM users WHERE id = ?";
-                PreparedStatement ps2 = conn.prepareStatement(query2);
-                ps2.setInt(1, user_id);
-                
-                ResultSet result2 = ps2.executeQuery();
-                
-                 if(result2.next()){
-                 
-                 String first_name = result2.getString("first_name");
-                 String last_name = result2.getString("last_name");
-    
-%>
-                    <div class="update" style="border-bottom: 1px solid red;">
-                        <div class="profile-photo">
-                            <img src="profile-default.png" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b><%= first_name %> <%= last_name %></b> <%= comment %></p>
-                            <small class="text-muted">2 Minutes Ago</small>
-                        </div>
-                    </div>
-
-      <%
-          }
-                   }
- 
-            }
-            catch (Exception e) {
-                out.println("Error: " + e.getMessage());
-            }
-%>             
-
-                    
-
-                </div>
-            </div>
-
-
-            <!-- === sales Analytics === -->
-            <div class="sales-analytics">
-                <h2>Booking <span style="color:red;">Analytics</span></h2>
-                    <%
-                try {
-                // Load MySQL Driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                
-               // Connect to Database
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
-                
-                 String query = "SELECT COUNT(*) AS bookingCounts FROM booking";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet rs = ps.executeQuery();
-
-               int bookingCounts = 0;
-               if (rs.next()) {
-                   bookingCounts = rs.getInt("bookingCounts");
-                   
-
-                    String query1 = "SELECT COUNT(*) AS customerCounts FROM users";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                ResultSet rs1 = ps1.executeQuery();
-
-               int customerCounts = 0;
-               if (rs1.next()) {
-                   customerCounts = rs1.getInt("customerCounts");
-               
-                
-                 
-    
-%>
-                <div class="item online">
-                    <div class="icon">
-                        <span class="material-icons-sharp">shopping_cart</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>ONLINE ORDERS</h3>
-                            <small class="text-muted">last 24 Hours</small>
-                        </div>
-                        <h5 class="success">+37%</h5>
-                        <h3><%= bookingCounts %></h3>
-                    </div>
-                </div>
-
-                <div class="item offline">
-                    <div class="icon">
-                        <span class="material-icons-sharp">local_mall</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>OFFLINE ORDERS</h3>
-                            <small class="text-muted">last 24 Hours</small>
-                        </div>
-                        <h5 class="danger">0</h5>
-                        <h3>0</h3>
-                    </div>
-                </div>
-
-                <div class="item customers">
-                    <div class="icon">
-                        <span class="material-icons-sharp">person</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>All CUSTOMERS</h3>
-                            <small class="text-muted">last 24 Hours</small>
-                        </div>
-                        <h5 class="success">+30%</h5>
-                        <h3><%= customerCounts %></h3>
-                    </div>
-                </div>
 <%
-          }
                    }
  
             }
             catch (Exception e) {
                 out.println("Error: " + e.getMessage());
             }
-%> 
+            %>   
+                            </select>
+                        </div>
+                    </div>
 
-            </div>
-        </div>
+                  
+                    <div class="row">
+                        <div class="column">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="" cols="30" rows="10" placeholder="Product Description"></textarea>
+                        </div>
+                    </div>
+                
+
+
+<!--                     //image upload  -->
+                    <label for="product-images">Movie Images</label>
+                    <div class="row">
+                       <div class="img-column">
+
+                       <div class="column">
+                                    <div class="form-element">
+                                        <input type="file" name="image1" id="file-1" accept="image/*">
+                                        <label for="file-1" id="file-1-preview">
+                                          <img src="transparent.png" alt="">
+                                          <div>
+                                            <span>+</span>
+                                          </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                      </div>
+                   </div>
+                    
+                                    
+
+
+                    <!-- //image upload  -->
+                    <label for="product-images">Movie Background Images</label>
+                    <div class="row">
+                       <div class="img-column">
+
+                                                       <div class="column">
+                                    <div class="form-element">
+                                        <input type="file" name="image2" id="file-2" accept="image/*">
+                                        <label for="file-2" id="file-2-preview">
+                                            <img src="transparent.png" alt="">
+                                          <div>
+                                            <span>+</span>
+                                          </div>
+                                        </label>
+                                      </div>
+                                </div>
+
+                      </div>
+                   </div>
+
+                   <div class="row">
+                    <div class="column">
+                        
+                        <a href="movie.jsp" class="submit" style="background-color: blue;">Back</a>
+                        <input class="submit" type="submit" name="submit" value="Add Movie">
+                        
+                    </div>
+                </div>
+                    
+
+            </form>
+
+</div>
 
     </div>
     
 
-
-</body>
+    </body>
 </html>
