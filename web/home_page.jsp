@@ -520,9 +520,6 @@ section  .show button:hover{
   background:#000;
 }
 
-
-
-/--footer------/
 footer{
   background:#222;
   color:#fff;
