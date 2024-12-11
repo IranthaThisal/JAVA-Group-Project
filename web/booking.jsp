@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>multiflex</title>
+    <title>ABC Cinema</title>
     <!-- MATERIAL CDN  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
       rel="stylesheet">
@@ -1138,3 +1138,82 @@ padding:5px 22px;
     width: 150px;
   }
       </style>
+      
+</head>
+<body>
+<% 
+        // Fetch data from URL parameters
+        String admin_id_para = request.getParameter("admin_id");
+%>     
+
+<%
+                try {
+                // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                int admin_id = Integer.parseInt(admin_id_para);
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                //email validation from server
+                String query1 = "SELECT * FROM admin WHERE id = ?";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                ps1.setInt(1, admin_id);
+                
+                ResultSet result1 = ps1.executeQuery();
+                
+                while(result1.next()){
+                String fname = result1.getString("first_name");
+                String lname = result1.getString("last_name"); 
+                String email = result1.getString("email");
+                String pwd = result1.getString("password");
+                String id = result1.getString("id");
+                
+
+
+
+
+%>
+        
+        <div class="login-container">
+          <form action="adminUpdateServlet?admin_id=<%=id%>" method="POST" id="loginForm" class="login-form">
+          <div class="login-info">
+            <h2>Admin Update</h2><br>
+
+          </div>
+          <br>
+            <div class="form-group">
+              <label for="username">First Name:</label>
+              <input type="text" id="username" name="fname" placeholder="Enter Username" required value="<%=fname%>">
+            </div>
+          <div class="form-group">
+              <label for="username">Last Name:</label>
+              <input type="text" id="username" name="lname" placeholder="Enter Username" required value="<%=lname%>">
+            </div>
+          <div class="form-group">
+              <label for="username">E Mail:</label>
+              <input type="email" id="username" name="mail" placeholder="Enter Username" required value="<%=email%>" readonly="">
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" placeholder="Enter Password" required value="<%=pwd%>">
+            </div>
+            <div class="login-info">
+                
+                <a href="admin.jsp"class="submit" style="background-color: blue;">Back</a>
+                <button type="submit" name="submit" class="submit">Update</button>
+            </div>
+          </form>
+        </div>
+            
+        </body>
+        </html>
+
+<%
+
+           }
+}
+             catch(Exception e){
+                    out.println("error");
+            }
+%>
