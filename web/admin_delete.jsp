@@ -1,9 +1,3 @@
-<%-- 
-    Document   : booking
-    Created on : 7 Dec 2024, 15:14:41
-    Author     : Wasula Jayawardana
---%>
-
 <%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
@@ -15,25 +9,24 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Cinema</title>
+    <title>sportexpert</title>
     <!-- MATERIAL CDN  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
       rel="stylesheet">
 
-    <style>
+      <style>
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 /* ROOT VARIABLES  */
 :root{
-    --color-primary: #ff0000;
+    --color-primary: #2bebc8;
     --color-danger: #ff7782;
-    --color-success: #ff0019;
+    --color-success: #41f1b6;
     --color-warning: #ffbb55;
     
     --color-info-dark: #7d8da1;
@@ -100,9 +93,11 @@ body{
 }
 
 .container{
-    width: 56%;
+    display: grid;
+    width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
+    grid-template-columns: 14rem auto 23rem;
 }
 
 a{
@@ -841,19 +836,20 @@ label {
     margin-right: 50px;
 }
 
-.form-container{
+.form-container {
     background: var(--color-white);
-    margin-top: 30px;
-    width: 95%;
-    min-width: 400px;
-    padding: 35px 5%;
-    transform: translate(-50% -50%);
-    left: 50%;
+    position: absolute; /* Required for transform centering */
     top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Fix missing comma */
+    width: 55%;
+    min-width: 400px;
+    padding: 15px 2%;
     border-radius: var(--card-border-radious);
     box-shadow: var(--box-shadow);
-    margin-bottom: 30px;
+    margin: 0; /* Remove any margin to ensure proper centering */
 }
+
 
 .form-container h2{
     text-align: center;
@@ -961,7 +957,7 @@ label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 50px;
     background-color: var(--color-background);
     border-radius: var(--border-radious-2);
 }
@@ -1137,83 +1133,47 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
+  .table_button{
+    display: flex;
+    gap: 20px;
+  }
+  .table_button button{
+    padding: 10px 25px;
+    border-radius: 15px;
+    background-color: #96fd30;
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .table_button button{
+    cursor: pointer;
+  }
+  .table_button .no-button{
+    background-color: #ce3333;
+  }
       </style>
-      
 </head>
 <body>
-<% 
+  <% 
         // Fetch data from URL parameters
-        String admin_id_para = request.getParameter("admin_id");
-%>     
+        String admin_id = request.getParameter("admin_id");
+    %>     
+    <div class="container"> 
 
-<%
-                try {
-                // Load MySQL Driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                int admin_id = Integer.parseInt(admin_id_para);
+            <div class="form-container table-container">
                 
-               // Connect to Database
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
-                
-                //email validation from server
-                String query1 = "SELECT * FROM admin WHERE id = ?";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                ps1.setInt(1, admin_id);
-                
-                ResultSet result1 = ps1.executeQuery();
-                
-                while(result1.next()){
-                String fname = result1.getString("first_name");
-                String lname = result1.getString("last_name"); 
-                String email = result1.getString("email");
-                String pwd = result1.getString("password");
-                String id = result1.getString("id");
-                
-
-
-
-
-%>
-        
-        <div class="login-container">
-          <form action="adminUpdateServlet?admin_id=<%=id%>" method="POST" id="loginForm" class="login-form">
-          <div class="login-info">
-            <h2>Admin Update</h2><br>
-
-          </div>
-          <br>
-            <div class="form-group">
-              <label for="username">First Name:</label>
-              <input type="text" id="username" name="fname" placeholder="Enter Username" required value="<%=fname%>">
+                <div class="table">
+                    <div class="table-header">
+                        <h3>Are you sure?</h3>
+                        <div class="table_button">
+                            
+                            <a href="delete_adminServlet?admin_id=<%=admin_id%>"><button>Yes</button></a>
+                            <a href="admin.jsp"><button class="no-button">no</button></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          <div class="form-group">
-              <label for="username">Last Name:</label>
-              <input type="text" id="username" name="lname" placeholder="Enter Username" required value="<%=lname%>">
-            </div>
-          <div class="form-group">
-              <label for="username">E Mail:</label>
-              <input type="email" id="username" name="mail" placeholder="Enter Username" required value="<%=email%>" readonly="">
-            </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password" placeholder="Enter Password" required value="<%=pwd%>">
-            </div>
-            <div class="login-info">
-                
-                <a href="admin.jsp"class="submit" style="background-color: blue;">Back</a>
-                <button type="submit" name="submit" class="submit">Update</button>
-            </div>
-          </form>
-        </div>
-            
-        </body>
-        </html>
+    </div>
+    
 
-<%
-
-           }
-}
-             catch(Exception e){
-                    out.println("error");
-            }
-%>
+    </body>
+</html>

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : booking
-    Created on : 7 Dec 2024, 15:14:41
-    Author     : Wasula Jayawardana
---%>
-
 <%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
@@ -15,17 +9,15 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Cinema</title>
+    <title>multiflex</title>
     <!-- MATERIAL CDN  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
       rel="stylesheet">
-
     <style>
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
@@ -33,7 +25,7 @@
 :root{
     --color-primary: #ff0000;
     --color-danger: #ff7782;
-    --color-success: #ff0019;
+    --color-success: #41f1b6;
     --color-warning: #ffbb55;
     
     --color-info-dark: #7d8da1;
@@ -62,6 +54,7 @@
     --box-shadow:0 2rem 3rem var(--color-light);
 
 }
+
 
 /* ---------dark theme variables--------- */
 .dark-theme-variables{
@@ -100,9 +93,11 @@ body{
 }
 
 .container{
-    width: 56%;
+    display: grid;
+    width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
+    grid-template-columns: 14rem auto 23rem;
 }
 
 a{
@@ -1137,83 +1132,155 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-      </style>
-      
+    </style>
 </head>
 <body>
-<% 
-        // Fetch data from URL parameters
-        String admin_id_para = request.getParameter("admin_id");
-%>     
-
-<%
-                try {
-                // Load MySQL Driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                int admin_id = Integer.parseInt(admin_id_para);
-                
-               // Connect to Database
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
-                
-                //email validation from server
-                String query1 = "SELECT * FROM admin WHERE id = ?";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                ps1.setInt(1, admin_id);
-                
-                ResultSet result1 = ps1.executeQuery();
-                
-                while(result1.next()){
-                String fname = result1.getString("first_name");
-                String lname = result1.getString("last_name"); 
-                String email = result1.getString("email");
-                String pwd = result1.getString("password");
-                String id = result1.getString("id");
-                
-
-
-
-
-%>
+      
+    <div class="container"> 
         
-        <div class="login-container">
-          <form action="adminUpdateServlet?admin_id=<%=id%>" method="POST" id="loginForm" class="login-form">
-          <div class="login-info">
-            <h2>Admin Update</h2><br>
-
-          </div>
-          <br>
-            <div class="form-group">
-              <label for="username">First Name:</label>
-              <input type="text" id="username" name="fname" placeholder="Enter Username" required value="<%=fname%>">
-            </div>
-          <div class="form-group">
-              <label for="username">Last Name:</label>
-              <input type="text" id="username" name="lname" placeholder="Enter Username" required value="<%=lname%>">
-            </div>
-          <div class="form-group">
-              <label for="username">E Mail:</label>
-              <input type="email" id="username" name="mail" placeholder="Enter Username" required value="<%=email%>" readonly="">
-            </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password" placeholder="Enter Password" required value="<%=pwd%>">
-            </div>
-            <div class="login-info">
-                
-                <a href="admin.jsp"class="submit" style="background-color: blue;">Back</a>
-                <button type="submit" name="submit" class="submit">Update</button>
-            </div>
-          </form>
-        </div>
+        <!-- ASIDE BAR STARTS HERE  -->
+        <aside>
             
-        </body>
-        </html>
 
-<%
+            <div class="top">
+                <div class="logo">
+                    <h2 style="color:white;">multi<span style="color: red;">flex</span></h2>
+                </div>
 
-           }
-}
-             catch(Exception e){
-                    out.println("error");
-            }
-%>
+                <div class="close" id="close-btn" onclick="closesidebar()">
+                    <span class="material-icons-sharp">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar" id="sidebar">
+
+                <a href="dashboard_home.jsp">
+                    <span class="material-icons-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                
+                <a href="admin.jsp"class="active">
+                    <span class="material-icons-sharp">person_outline</span>
+                    <h3>Admins</h3>
+                </a>
+                
+                <a href="booking_dashboard.jsp">
+                    <span class="material-icons-sharp">receipt_long</span>
+                    <h3>Bookings</h3>
+                </a>
+                <a href="comments.jsp">
+                    <span class="material-icons-sharp">mail_outline</span>
+                    <h3>Comments</h3>
+                    <span class="message-count">99</span>
+                </a>
+                
+                <a href="movie.jsp">
+                    <span class="material-icons-sharp">inventory</span>
+                    <h3>Movies</h3>
+                </a>
+                <a href="tickets.jsp">
+                    <span class="material-icons-sharp">insights</span>
+                    <h3>Tickets</h3>
+                </a>
+                <a href="movie_category.jsp">
+                <span class="material-icons-sharp">category</span>
+                    <h3>Movie Categories</h3>
+                </a>
+                <a href="add_movie.jsp">
+                    <span class="material-icons-sharp">add</span>
+                    <h3>Add Movie</h3>
+                </a>
+                <a href="add_movie_category.jsp">
+                    <span class="material-icons-sharp">queue</span>
+                    <h3>Add Movie Category</h3>
+                </a>
+                <a href="add_ticket.jsp">
+                    <span class="material-icons-sharp">queue</span>
+                    <h3>Add Movie Tickets</h3>
+                </a>
+                <a href="logout.jsp">
+                    <span class="material-icons-sharp">logout</span>
+                    <h3>Log out</h3>
+                </a>
+            </div>
+        </aside>
+     
+
+            <!-- admin table starts here -->
+            <div class="form-container table-container">
+                
+                <div class="table">
+                    <div class="table-header">
+                        <h3>Admin Details</h3>
+
+                        <a href="admin_register.jsp">
+                            <input class="submit" type="button" name="submit" value="Add admin">
+                        </a>
+                    </div>
+
+                    <div class="table-section">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Admin Id</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                                <%
+                                try{
+                                    
+                                 Class.forName("com.mysql.cj.jdbc.Driver");
+                
+                                 // Connect to Database
+                                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                                 String query1 = "SELECT * FROM admin";
+                                 PreparedStatement ps1 = conn.prepareStatement(query1);
+                                 ResultSet result = ps1.executeQuery();
+                                 while(result.next()){
+                                  
+                                 int id = result.getInt("id");
+                                 String fname = result.getString("first_name");
+                                 String lname = result.getString("last_name");
+                                 String email = result.getString("email");
+                                   
+                               
+                                %>
+                                
+                                <tr>
+                                    <td><%= id %></td>
+                                    <td><%= fname %> <%= lname %></td>
+                                    <td><%= email %></td>
+                                    
+                                    <td>
+                                        <a href="admin_update.jsp?admin_id=<%= id %>"><span class="material-icons-sharp edit">edit</span></a>
+                                       <a href="admin_delete.jsp?admin_id=<%= id %>"> <span class="material-icons-sharp delete">delete</span></a>
+                                    </td>
+                                </tr>
+              
+
+                                <%
+                                     }
+                               
+                                    }
+                                               catch(Exception e){
+                                    
+                                out.println(e);
+                                    }
+
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+    
+
+    </body>
+</html>
