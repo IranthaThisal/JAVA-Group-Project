@@ -1247,6 +1247,7 @@ th, td {
                                     <th>Comment Id</th>
                                     <th>User Name</th>
                                     <th>Comment</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -1296,6 +1297,7 @@ th, td {
                     <td><%= comment_id %></td>
                     <td><%= first_name %> <%= last_name %></td>
                     <td><%= comment %></td>
+                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
                 </tr>
 <%       
     
@@ -1320,7 +1322,5 @@ th, td {
     </div>
     
 
-    </body>
-</html>
     </body>
 </html>
