@@ -12,6 +12,10 @@
         <servlet-name>addTicketsServlet</servlet-name>
         <servlet-class>gihan.addTicketsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>updateTicketServlet</servlet-name>
+        <servlet-class>gihan.updateTicketServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addTicketServlet</servlet-name>
         <url-pattern>/addTicketServlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>addTicketsServlet</servlet-name>
         <url-pattern>/addTicketsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateTicketServlet</servlet-name>
+        <url-pattern>/updateTicketServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
