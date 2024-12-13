@@ -1,18 +1,4 @@
-<%-- 
-    Document   : comments
-    Created on : Dec 11, 2024, 1:23:01 PM
-    Author     : sandr
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
        HttpSession session1 = request.getSession(false);
@@ -23,6 +9,7 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1146,20 +1133,13 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
-    
-}
-
-th, td {
-    border-bottom: 1px solid red;
-}
       </style>
 </head>
 <body>
       
     <div class="container"> 
         
-               <!-- ASIDE BAR STARTS HERE  -->
+         <!-- ASIDE BAR STARTS HERE  -->
         <aside>
             
 
@@ -1175,7 +1155,7 @@ th, td {
 
             <div class="sidebar" id="sidebar">
 
-                <a href="dashboard_home.jsp" >
+                <a href="dashboard_home.jsp">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -1189,7 +1169,7 @@ th, td {
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Bookings</h3>
                 </a>
-                <a href="comments.jsp" class="active">
+                <a href="comments.jsp">
                     <span class="material-icons-sharp">mail_outline</span>
                     <h3>Comments</h3>
                     <span class="message-count">99</span>
@@ -1211,7 +1191,7 @@ th, td {
                     <span class="material-icons-sharp">add</span>
                     <h3>Add Movie</h3>
                 </a>
-                <a href="add_movie_category.jsp">
+                <a href="add_movie_category.jsp" class="active">
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Category</h3>
                 </a>
@@ -1228,99 +1208,46 @@ th, td {
 
 
 
-   
 
-            <!-- Category table starts here -->
-            <div class="form-container table-container">
+
+            <!-- add category -->
+            <div class="form-container">
+                <h2>Add category</h2>
+                <p>Fill all the required fields below</p>
                 
-                <div class="table">
-                    <div class="table-header">
-                        <h3>All Comments</h3>
+                <!-- add category form starts here -->
+                <form action="movieCategoryServlet" method="POST" >
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Category Name</label>
+                            <input type="text" name="title" id="title" placeholder="Category Title" required="">
+                        </div>
 
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="description">Category Description</label>
+                            <textarea name="description" id="" cols="30" rows="10" placeholder="Category Description" required=""></textarea>
+                        </div>
+                    </div>
+
+                   <div class="row">
+                    <div class="column">
+                        
+                        <a href="movie_category.jsp" class="submit" style="background-color: blue;">Back</a>
+                        <input class="submit" type="submit" name="submit" value="Add Category">
                         
                     </div>
+                   </div>
+                </form>
+                <!-- add category form ends here -->
 
-                    <div class="table-section">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Comment Id</th>
-                                    <th>User Name</th>
-                                    <th>Comment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                
-    <%
-                               
-                try {
-                // Load MySQL Driver
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                
-               // Connect to Database
-                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
-                
-                
-                String query1 = "SELECT * FROM comments";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                
-                ResultSet result = ps1.executeQuery();
-                
-                while(result.next()){
-                   int comment_id = result.getInt("comment_id");
-                   int user_id = result.getInt("user_id");
-                   String comment = result.getString("comment");
-
-                   
-                      String query2 = "SELECT * FROM users WHERE id = ?";
-                      PreparedStatement ps2 = conn.prepareStatement(query2);
-                      ps2.setInt(1, user_id);
-                
-                     ResultSet result2 = ps2.executeQuery();
-                     
-                     if(result2.next()){
-                     
-                        String first_name = result2.getString("first_name");
-                        String last_name = result2.getString("last_name");
-                     
-                     
-                     
-                     
-                     
-
-%>
-                
-
-                <tr>
-                    <td><%= comment_id %></td>
-                    <td><%= first_name %> <%= last_name %></td>
-                    <td><%= comment %></td>
-                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
-                </tr>
-<%       
-    
-}
-                   }
- 
-            }
-            catch (Exception e) {
-                out.println(e);
-            }
-%>   
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+     
             </div>
-           
 
     </div>
-    
-
-    </body>
+</body>
 </html>

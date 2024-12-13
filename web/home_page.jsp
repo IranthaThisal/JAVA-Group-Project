@@ -522,7 +522,7 @@ section  .show button:hover{
 
 
 
-/--footer------/
+
 footer{
   background:#222;
   color:#fff;

@@ -1,18 +1,4 @@
-<%-- 
-    Document   : comments
-    Created on : Dec 11, 2024, 1:23:01 PM
-    Author     : sandr
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
        HttpSession session1 = request.getSession(false);
@@ -314,7 +300,7 @@ main .insights > div:hover{
 }
 
 main .insights > div span{
-    background: var(--color-primary);
+    background: #ff0000;
     padding: 0.5rem;
     border-radius: 50%;
     color: var(--color-white);
@@ -931,7 +917,7 @@ label {
     position:absolute;
     height:40px;
     margin-top:-40px;
-    background-color: rgba(115, 128, 236, 0.5);
+    background-color: #ff0000;
     text-align:center;
     line-height:40px;
     font-size:13px;
@@ -1146,20 +1132,13 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
-    
-}
-
-th, td {
-    border-bottom: 1px solid red;
-}
       </style>
 </head>
 <body>
       
     <div class="container"> 
         
-               <!-- ASIDE BAR STARTS HERE  -->
+        <!-- ASIDE BAR STARTS HERE  -->
         <aside>
             
 
@@ -1189,7 +1168,7 @@ th, td {
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Bookings</h3>
                 </a>
-                <a href="comments.jsp" class="active">
+                <a href="comments.jsp">
                     <span class="material-icons-sharp">mail_outline</span>
                     <h3>Comments</h3>
                     <span class="message-count">99</span>
@@ -1207,7 +1186,7 @@ th, td {
                 <span class="material-icons-sharp">category</span>
                     <h3>Movie Categories</h3>
                 </a>
-                <a href="add_movie.jsp">
+                <a href="add_movie.jsp"class="active">
                     <span class="material-icons-sharp">add</span>
                     <h3>Add Movie</h3>
                 </a>
@@ -1215,7 +1194,7 @@ th, td {
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Category</h3>
                 </a>
-                <a href="add_ticket.jsp">
+                 <a href="add_ticket.jsp">
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Tickets</h3>
                 </a>
@@ -1227,34 +1206,72 @@ th, td {
         </aside>
 
 
-
-   
-
-            <!-- Category table starts here -->
-            <div class="form-container table-container">
-                
-                <div class="table">
-                    <div class="table-header">
-                        <h3>All Comments</h3>
-
+            <!-- add products form starts here -->
+            <div class="form-container">
+                <h2>Add Movie</h2>
+                <p>Fill all the required fields below</p>
+                <form action="addMoviServlet" method="POST" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Movie Name</label>
+                            <input type="text" name="name" id="title" placeholder="Product Title" required>
+                        </div>
                         
+                        <div class="column">
+                            <label for="sub-title">Movie Title</label>
+                            <input type="text" name="title" id="sub-title" placeholder="Product sub title">
+                        </div>  
+                    </div>
+                    
+                     <div class="row">
+                        <div class="column">
+                            <label for="title">Release Date</label>
+                            <input type="number" name="release" id="title" placeholder="Product Title" required>
+                        </div> 
+                       <div class="column">
+                            <label for="discount">IMDB</label>
+                            <input type="text" name="imdb"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
                     </div>
 
-                    <div class="table-section">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Comment Id</th>
-                                    <th>User Name</th>
-                                    <th>Comment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                   <div class="row">
+                        <div class="column">
+                            <label for="discount">Location</label>
+                            <input type="text" name="location"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                       <div class="column">
+                            <label for="discount">Duration (minute)</label>
+                            <input type="number" name="duration"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
 
-                            <tbody>
-                                
-    <%
-                               
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="price">Time</label>
+                            <input type="text" name="time"  min="0" id="price" placeholder="Product Price" required>
+                        </div>
+
+                        <div class="column">
+                            <label for="discount">Date</label>
+                            <input type="text" name="date"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        
+
+                    <div class="column">
+                            <label for="discount">Trailer</label>
+                            <input type="text" name="trailer"  min="0"  id="discount" placeholder="Discount Price">
+                        </div>  
+                    </div>
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="category">Category</label>
+                            <select name="category" id="category">
+               <%
                 try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1262,62 +1279,95 @@ th, td {
                // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
-                
-                String query1 = "SELECT * FROM comments";
+                //email validation from server
+                String query1 = "SELECT * FROM movie_category";
                 PreparedStatement ps1 = conn.prepareStatement(query1);
                 
                 ResultSet result = ps1.executeQuery();
                 
                 while(result.next()){
-                   int comment_id = result.getInt("comment_id");
-                   int user_id = result.getInt("user_id");
-                   String comment = result.getString("comment");
-
-                   
-                      String query2 = "SELECT * FROM users WHERE id = ?";
-                      PreparedStatement ps2 = conn.prepareStatement(query2);
-                      ps2.setInt(1, user_id);
-                
-                     ResultSet result2 = ps2.executeQuery();
-                     
-                     if(result2.next()){
-                     
-                        String first_name = result2.getString("first_name");
-                        String last_name = result2.getString("last_name");
-                     
-                     
-                     
-                     
-                     
-
+                String category = result.getString("category"); 
 %>
-                
+                <option value="<%= category %>"><%= category %></option>
 
-                <tr>
-                    <td><%= comment_id %></td>
-                    <td><%= first_name %> <%= last_name %></td>
-                    <td><%= comment %></td>
-                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
-                </tr>
-<%       
-    
-}
+<%
                    }
  
             }
             catch (Exception e) {
-                out.println(e);
+                out.println("Error: " + e.getMessage());
             }
-%>   
+            %>   
+                            </select>
+                        </div>
+                    </div>
+
+                  
+                    <div class="row">
+                        <div class="column">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="" cols="30" rows="10" placeholder="Product Description"></textarea>
+                        </div>
+                    </div>
+                
 
 
-                            </tbody>
-                        </table>
+<!--                     //image upload  -->
+                    <label for="product-images">Movie Images</label>
+                    <div class="row">
+                       <div class="img-column">
+
+                       <div class="column">
+                                    <div class="form-element">
+                                        <input type="file" name="image1" id="file-1" accept="image/*">
+                                        <label for="file-1" id="file-1-preview">
+                                          <img src="transparent.png" alt="">
+                                          <div>
+                                            <span>+</span>
+                                          </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                      </div>
+                   </div>
+                    
+                                    
+
+
+                    <!-- //image upload  -->
+                    <label for="product-images">Movie Background Images</label>
+                    <div class="row">
+                       <div class="img-column">
+
+                                                       <div class="column">
+                                    <div class="form-element">
+                                        <input type="file" name="image2" id="file-2" accept="image/*">
+                                        <label for="file-2" id="file-2-preview">
+                                            <img src="transparent.png" alt="">
+                                          <div>
+                                            <span>+</span>
+                                          </div>
+                                        </label>
+                                      </div>
+                                </div>
+
+                      </div>
+                   </div>
+
+                   <div class="row">
+                    <div class="column">
+                        
+                        <a href="movie.jsp" class="submit" style="background-color: blue;">Back</a>
+                        <input class="submit" type="submit" name="submit" value="Add Movie">
+                        
                     </div>
                 </div>
+                    
 
-            </div>
-           
+            </form>
+
+</div>
 
     </div>
     

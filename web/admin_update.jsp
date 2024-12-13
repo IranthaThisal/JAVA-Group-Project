@@ -1,18 +1,4 @@
-<%-- 
-    Document   : comments
-    Created on : Dec 11, 2024, 1:23:01 PM
-    Author     : sandr
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
        HttpSession session1 = request.getSession(false);
@@ -23,6 +9,7 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1080,7 +1067,7 @@ padding:5px 22px;
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #2d2d2d;
     padding: 0 20px; /* Added padding for spacing */
   }
   
@@ -1091,10 +1078,10 @@ padding:5px 22px;
   
   .login-form {
     flex: 1; /* Occupy remaining space */
-    background-color: #fff;
+    background-color: #181818;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px  var(--color-success);;
     width: 100%; /* Initially take full width */
     max-width: 400px; /* Limiting the max-width */
     margin: 0 auto; /* Center the form horizontally */
@@ -1146,181 +1133,83 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
-    
-}
 
-th, td {
-    border-bottom: 1px solid red;
-}
       </style>
 </head>
 <body>
-      
-    <div class="container"> 
-        
-               <!-- ASIDE BAR STARTS HERE  -->
-        <aside>
-            
+<% 
+        // Fetch data from URL parameters
+        String admin_id_para = request.getParameter("admin_id");
+%>     
 
-            <div class="top">
-                <div class="logo">
-                    <h2 style="color:white;">multi<span style="color: red;">flex</span></h2>
-                </div>
-
-                <div class="close" id="close-btn" onclick="closesidebar()">
-                    <span class="material-icons-sharp">close</span>
-                </div>
-            </div>
-
-            <div class="sidebar" id="sidebar">
-
-                <a href="dashboard_home.jsp" >
-                    <span class="material-icons-sharp">grid_view</span>
-                    <h3>Dashboard</h3>
-                </a>
-                
-                <a href="admin.jsp">
-                    <span class="material-icons-sharp">person_outline</span>
-                    <h3>Admins</h3>
-                </a>
-                
-                <a href="booking_dashboard.jsp">
-                    <span class="material-icons-sharp">receipt_long</span>
-                    <h3>Bookings</h3>
-                </a>
-                <a href="comments.jsp" class="active">
-                    <span class="material-icons-sharp">mail_outline</span>
-                    <h3>Comments</h3>
-                    <span class="message-count">99</span>
-                </a>
-                
-                <a href="movie.jsp">
-                    <span class="material-icons-sharp">inventory</span>
-                    <h3>Movies</h3>
-                </a>
-                <a href="tickets.jsp">
-                    <span class="material-icons-sharp">insights</span>
-                    <h3>Tickets</h3>
-                </a>
-                <a href="movie_category.jsp">
-                <span class="material-icons-sharp">category</span>
-                    <h3>Movie Categories</h3>
-                </a>
-                <a href="add_movie.jsp">
-                    <span class="material-icons-sharp">add</span>
-                    <h3>Add Movie</h3>
-                </a>
-                <a href="add_movie_category.jsp">
-                    <span class="material-icons-sharp">queue</span>
-                    <h3>Add Movie Category</h3>
-                </a>
-                <a href="add_ticket.jsp">
-                    <span class="material-icons-sharp">queue</span>
-                    <h3>Add Movie Tickets</h3>
-                </a>
-                <a href="logout.jsp">
-                    <span class="material-icons-sharp">logout</span>
-                    <h3>Log out</h3>
-                </a>
-            </div>
-        </aside>
-
-
-
-   
-
-            <!-- Category table starts here -->
-            <div class="form-container table-container">
-                
-                <div class="table">
-                    <div class="table-header">
-                        <h3>All Comments</h3>
-
-                        
-                    </div>
-
-                    <div class="table-section">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Comment Id</th>
-                                    <th>User Name</th>
-                                    <th>Comment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                
-    <%
-                               
+<%
                 try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
+                int admin_id = Integer.parseInt(admin_id_para);
                 
                // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
-                
-                String query1 = "SELECT * FROM comments";
+                //email validation from server
+                String query1 = "SELECT * FROM admin WHERE id = ?";
                 PreparedStatement ps1 = conn.prepareStatement(query1);
+                ps1.setInt(1, admin_id);
                 
-                ResultSet result = ps1.executeQuery();
+                ResultSet result1 = ps1.executeQuery();
                 
-                while(result.next()){
-                   int comment_id = result.getInt("comment_id");
-                   int user_id = result.getInt("user_id");
-                   String comment = result.getString("comment");
+                while(result1.next()){
+                String fname = result1.getString("first_name");
+                String lname = result1.getString("last_name"); 
+                String email = result1.getString("email");
+                String pwd = result1.getString("password");
+                String id = result1.getString("id");
+                
 
-                   
-                      String query2 = "SELECT * FROM users WHERE id = ?";
-                      PreparedStatement ps2 = conn.prepareStatement(query2);
-                      ps2.setInt(1, user_id);
-                
-                     ResultSet result2 = ps2.executeQuery();
-                     
-                     if(result2.next()){
-                     
-                        String first_name = result2.getString("first_name");
-                        String last_name = result2.getString("last_name");
-                     
-                     
-                     
-                     
-                     
+
+
 
 %>
-                
+        
+        <div class="login-container">
+          <form action="adminUpdateServlet?admin_id=<%=id%>" method="POST" id="loginForm" class="login-form">
+          <div class="login-info">
+            <h2>Admin Update</h2><br>
 
-                <tr>
-                    <td><%= comment_id %></td>
-                    <td><%= first_name %> <%= last_name %></td>
-                    <td><%= comment %></td>
-                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
-                </tr>
-<%       
-    
-}
-                   }
- 
-            }
-            catch (Exception e) {
-                out.println(e);
-            }
-%>   
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+          </div>
+          <br>
+            <div class="form-group">
+              <label for="username">First Name:</label>
+              <input type="text" id="username" name="fname" placeholder="Enter Username" required value="<%=fname%>">
             </div>
-           
+          <div class="form-group">
+              <label for="username">Last Name:</label>
+              <input type="text" id="username" name="lname" placeholder="Enter Username" required value="<%=lname%>">
+            </div>
+          <div class="form-group">
+              <label for="username">E Mail:</label>
+              <input type="email" id="username" name="mail" placeholder="Enter Username" required value="<%=email%>" readonly="">
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" id="password" name="password" placeholder="Enter Password" required value="<%=pwd%>">
+            </div>
+            <div class="login-info">
+                
+                <a href="admin.jsp"class="submit" style="background-color: blue;">Back</a>
+                <button type="submit" name="submit" class="submit">Update</button>
+            </div>
+          </form>
+        </div>
+            
+        </body>
+        </html>
 
-    </div>
-    
+<%
 
-    </body>
-</html>
+           }
+}
+             catch(Exception e){
+                    out.println("error");
+            }
+%>

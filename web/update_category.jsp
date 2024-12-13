@@ -1,18 +1,4 @@
-<%-- 
-    Document   : comments
-    Created on : Dec 11, 2024, 1:23:01 PM
-    Author     : sandr
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
        HttpSession session1 = request.getSession(false);
@@ -23,6 +9,7 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1146,20 +1133,13 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
-    
-}
-
-th, td {
-    border-bottom: 1px solid red;
-}
       </style>
 </head>
 <body>
       
     <div class="container"> 
         
-               <!-- ASIDE BAR STARTS HERE  -->
+         <!-- ASIDE BAR STARTS HERE  -->
         <aside>
             
 
@@ -1175,7 +1155,7 @@ th, td {
 
             <div class="sidebar" id="sidebar">
 
-                <a href="dashboard_home.jsp" >
+                <a href="dashboard_home.jsp">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -1189,7 +1169,7 @@ th, td {
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Bookings</h3>
                 </a>
-                <a href="comments.jsp" class="active">
+                <a href="comments.jsp">
                     <span class="material-icons-sharp">mail_outline</span>
                     <h3>Comments</h3>
                     <span class="message-count">99</span>
@@ -1215,6 +1195,10 @@ th, td {
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Category</h3>
                 </a>
+                <a href="add_movie_category.jsp" class="active">
+                    <span class="material-icons-sharp">queue</span>
+                    <h3>Update Movie Category</h3>
+                </a>
                 <a href="add_ticket.jsp">
                     <span class="material-icons-sharp">queue</span>
                     <h3>Add Movie Tickets</h3>
@@ -1228,99 +1212,83 @@ th, td {
 
 
 
-   
 
-            <!-- Category table starts here -->
-            <div class="form-container table-container">
+
+            <!-- add category -->
+            <div class="form-container">
+                <h2>Update Category</h2>
+                <p>Fill all the required fields below</p>
                 
-                <div class="table">
-                    <div class="table-header">
-                        <h3>All Comments</h3>
+                <% 
+        // Fetch data from URL parameters
+        String category_id_para = request.getParameter("category_id");
+%>     
 
-                        
-                    </div>
-
-                    <div class="table-section">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Comment Id</th>
-                                    <th>User Name</th>
-                                    <th>Comment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                
-    <%
-                               
+<%
                 try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
+                int category_id = Integer.parseInt(category_id_para);
                 
                // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
-                
-                String query1 = "SELECT * FROM comments";
+                //email validation from server
+                String query1 = "SELECT * FROM movie_category WHERE id = ?";
                 PreparedStatement ps1 = conn.prepareStatement(query1);
+                ps1.setInt(1, category_id);
                 
-                ResultSet result = ps1.executeQuery();
+                ResultSet result1 = ps1.executeQuery();
                 
-                while(result.next()){
-                   int comment_id = result.getInt("comment_id");
-                   int user_id = result.getInt("user_id");
-                   String comment = result.getString("comment");
+                while(result1.next()){
+                String category = result1.getString("category");
+                String description = result1.getString("description");
 
-                   
-                      String query2 = "SELECT * FROM users WHERE id = ?";
-                      PreparedStatement ps2 = conn.prepareStatement(query2);
-                      ps2.setInt(1, user_id);
-                
-                     ResultSet result2 = ps2.executeQuery();
-                     
-                     if(result2.next()){
-                     
-                        String first_name = result2.getString("first_name");
-                        String last_name = result2.getString("last_name");
-                     
-                     
-                     
-                     
-                     
+
+
 
 %>
                 
+                <!-- add category form starts here -->
+                <form action="updateCategoryServlet?category_id=<%= category_id %>" method="POST" >
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Category Name</label>
+                            <input type="text" name="name" id="title" placeholder="Category Title" required="" value="<%= category %>">
+                        </div>
 
-                <tr>
-                    <td><%= comment_id %></td>
-                    <td><%= first_name %> <%= last_name %></td>
-                    <td><%= comment %></td>
-                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
-                </tr>
-<%       
-    
-}
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="column">
+                            <label for="description">Category Description</label>
+                            <textarea name="description" id="" cols="30" rows="10" placeholder="Category Description" required=""value="<%= description %>"></textarea>
+                        </div>
+                    </div>
+ <%
                    }
  
             }
             catch (Exception e) {
-                out.println(e);
+                out.println("Error: " + e.getMessage());
             }
-%>   
-
-
-                            </tbody>
-                        </table>
+%>  
+                   <div class="row">
+                    <div class="column">
+                        
+                        <a href="movie_category.jsp" class="submit" style="background-color: blue;">Back</a>
+                        <input class="submit" type="submit" name="submit" value="Update Category">
+                        
                     </div>
-                </div>
+                   </div>
+                </form>
+                <!-- add category form ends here -->
 
+     
             </div>
-           
 
     </div>
-    
-
-    </body>
+</body>
 </html>

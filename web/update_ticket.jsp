@@ -1,19 +1,5 @@
-<%-- 
-    Document   : comments
-    Created on : Dec 11, 2024, 1:23:01 PM
-    Author     : sandr
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <%@ page import="java.sql.*" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
      <%
        HttpSession session1 = request.getSession(false);
     
@@ -23,6 +9,7 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +27,7 @@
 :root{
     --color-primary: #ff0000;
     --color-danger: #ff7782;
-    --color-success: #ff0000;
+    --color-success: #41f1b6;
     --color-warning: #ffbb55;
     
     --color-info-dark: #7d8da1;
@@ -1146,20 +1133,21 @@ padding:5px 22px;
     margin: 0;
     width: 150px;
   }
-  table {
+    table {
     
 }
 
 th, td {
     border-bottom: 1px solid red;
 }
+
       </style>
 </head>
 <body>
       
     <div class="container"> 
         
-               <!-- ASIDE BAR STARTS HERE  -->
+        <!-- ASIDE BAR STARTS HERE  -->
         <aside>
             
 
@@ -1175,7 +1163,7 @@ th, td {
 
             <div class="sidebar" id="sidebar">
 
-                <a href="dashboard_home.jsp" >
+                <a href="dashboard_home.jsp">
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
@@ -1189,7 +1177,7 @@ th, td {
                     <span class="material-icons-sharp">receipt_long</span>
                     <h3>Bookings</h3>
                 </a>
-                <a href="comments.jsp" class="active">
+                <a href="comments.jsp">
                     <span class="material-icons-sharp">mail_outline</span>
                     <h3>Comments</h3>
                     <span class="message-count">99</span>
@@ -1199,7 +1187,7 @@ th, td {
                     <span class="material-icons-sharp">inventory</span>
                     <h3>Movies</h3>
                 </a>
-                <a href="tickets.jsp">
+                <a href="tickets.jsp"class="active">
                     <span class="material-icons-sharp">insights</span>
                     <h3>Tickets</h3>
                 </a>
@@ -1217,8 +1205,9 @@ th, td {
                 </a>
                 <a href="add_ticket.jsp">
                     <span class="material-icons-sharp">queue</span>
-                    <h3>Add Movie Tickets</h3>
+                    <h3>Add Movie Category</h3>
                 </a>
+                
                 <a href="logout.jsp">
                     <span class="material-icons-sharp">logout</span>
                     <h3>Log out</h3>
@@ -1227,100 +1216,87 @@ th, td {
         </aside>
 
 
+<% 
+        // Fetch data from URL parameters
+        String ticket_id_para = request.getParameter("ticket_id");
+%>     
 
-   
-
-            <!-- Category table starts here -->
-            <div class="form-container table-container">
-                
-                <div class="table">
-                    <div class="table-header">
-                        <h3>All Comments</h3>
-
-                        
-                    </div>
-
-                    <div class="table-section">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Comment Id</th>
-                                    <th>User Name</th>
-                                    <th>Comment</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                
-    <%
-                               
+<%
                 try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
+                int ticket_id = Integer.parseInt(ticket_id_para);
                 
                // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
-                
-                String query1 = "SELECT * FROM comments";
+                //email validation from server
+                String query1 = "SELECT * FROM tickets WHERE id = ?";
                 PreparedStatement ps1 = conn.prepareStatement(query1);
+                ps1.setInt(1, ticket_id);
                 
-                ResultSet result = ps1.executeQuery();
+                ResultSet result1 = ps1.executeQuery();
                 
-                while(result.next()){
-                   int comment_id = result.getInt("comment_id");
-                   int user_id = result.getInt("user_id");
-                   String comment = result.getString("comment");
+                while(result1.next()){
+                String type = result1.getString("type");
 
-                   
-                      String query2 = "SELECT * FROM users WHERE id = ?";
-                      PreparedStatement ps2 = conn.prepareStatement(query2);
-                      ps2.setInt(1, user_id);
+                int price = result1.getInt("price");
+                int id = result1.getInt("id");
                 
-                     ResultSet result2 = ps2.executeQuery();
-                     
-                     if(result2.next()){
-                     
-                        String first_name = result2.getString("first_name");
-                        String last_name = result2.getString("last_name");
-                     
-                     
-                     
-                     
-                     
+
+
+
 
 %>
-                
 
-                <tr>
-                    <td><%= comment_id %></td>
-                    <td><%= first_name %> <%= last_name %></td>
-                    <td><%= comment %></td>
-                    <td><a href="comment_delete.jsp?comment_id=<%= comment_id %>"> <span class="material-icons-sharp delete">delete</span></a></td>
-                </tr>
-<%       
-    
-}
+
+
+            <!-- add category -->
+            <div class="form-container">
+                <h2>Update Ticket</h2>
+                <p>Fill all the required fields below</p>
+                
+               
+                <form action="updateTicketServlet?ticket_id=<%= id %>" method="POST" >
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Ticket Name</label>
+                            <input type="text" name="type" id="title" placeholder="" value="<%= type %>">
+                        </div>
+
+                    </div>
+
+
+
+                     <div class="row">
+                        <div class="column">
+                            <label for="title">Ticket Price:</label>
+                            <input type="number" name="price" id="title" placeholder=""value="<%= price %>">
+                        </div>
+
+                    </div>
+
+                   <div class="row">
+                    <div class="column">
+                        <a href="tickets.jsp" class="submit" style="background-color: blue;">Back</a>
+                        <input class="submit" type="submit" name="submit" value="Update Ticket">
+                    </div>
+                   </div>
+                </form>
+            
+     
+   
+            </div>
+            
+            <%
                    }
  
             }
             catch (Exception e) {
-                out.println(e);
+                out.println("Error: " + e.getMessage());
             }
-%>   
-
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-           
+%>  
 
     </div>
-    
-
-    </body>
+</body>
 </html>
