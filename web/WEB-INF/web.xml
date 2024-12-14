@@ -16,6 +16,14 @@
         <servlet-name>updateTicketServlet</servlet-name>
         <servlet-class>gihan.updateTicketServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>delete_ticket</servlet-name>
+        <servlet-class>gihan.delete_ticket</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>delete_ticketServlet</servlet-name>
+        <servlet-class>gihan.delete_ticketServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>addTicketServlet</servlet-name>
         <url-pattern>/addTicketServlet</url-pattern>
@@ -31,6 +39,14 @@
     <servlet-mapping>
         <servlet-name>updateTicketServlet</servlet-name>
         <url-pattern>/updateTicketServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_ticket</servlet-name>
+        <url-pattern>/delete_ticket</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>delete_ticketServlet</servlet-name>
+        <url-pattern>/delete_ticketServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
