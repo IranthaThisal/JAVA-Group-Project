@@ -9,6 +9,7 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,16 +27,17 @@
 :root{
     --color-primary: #ff0000;
     --color-danger: #ff7782;
-    --color-success: #ff0000;
+    --color-success: #41f1b6;
     --color-warning: #ffbb55;
     
+    --color-white: #fff;
     --color-info-dark: #7d8da1;
-    --color-info-light: #2a2a2b;
+    --color-info-light: #dce1eb;
     --color-dark: #363949;
     --color-light: rgba(132, 139, 200, 0.18);
-    --color-primary-variant:#235e53;
+    --color-primary-variant: #111e88;
     --color-dark-varient: #677483;
-
+    --color-background: #f6f6f9;
 
     --card-border-radious: 2rem;
     --border-radious-1: 0.4rem;
@@ -46,7 +48,7 @@
     --padding-1: 1.2rem;
 
     --box-shadow: 0 2rem 3rem var(--color-light);
-
+    
     --color-background:#181a1e;
     --color-white:#202528;
     --color-dark:#edeffd;
@@ -303,12 +305,12 @@ main .insights > div span{
     background: var(--color-primary);
     padding: 0.5rem;
     border-radius: 50%;
-    color: var(--color-white);
+    color: white;
     font-size: 2rem;
 }
 
 main .insights > div.category span{
-    background: var(--color-danger);
+    background: blue;
 }
 
 main .insights > div.income span{
@@ -336,6 +338,16 @@ main .insights svg{
 main .insights svg circle{
     fill: none;
     stroke: var(--color-primary);
+    stroke-width: 14px;
+    stroke-linecap: round;
+    transform: translate(5px, 5px);
+    stroke-dasharray: 110;
+    stroke-dashoffset: 92;
+}
+
+main .insights svg .cc{
+    fill: none;
+    stroke: blue;
     stroke-width: 14px;
     stroke-linecap: round;
     transform: translate(5px, 5px);
@@ -579,8 +591,569 @@ main .recent-orders a{
     /* background: var(--color-primary);
     color: white; */
 }
-</style>
-   </head>
+
+
+
+/* ========== MEDIA QUERY ========== */
+
+/* for tablets */
+@media screen and (max-width:1200px) {
+    .container{
+        width: 94%;
+        grid-template-columns: 7rem auto 23rem;
+    }
+    
+    aside .sidebar h3{
+        display: none;
+    }
+    aside .sidebar a{
+        width: 5.6rem;
+    }
+    aside .sidebar a:last-child{
+        position: relative;
+        margin-top: 1.8rem;
+    }
+    main .insights{
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    main .recent-orders{
+        width: 94%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 2rem 0 0 8.8rem;
+    }
+
+    main .recent-orders table{
+        width: 80vw;
+    }
+    main table thead tr th:nth-child(2){
+        display: none;
+    }
+    main table tbody tr td:nth-child(2){
+        display: none;
+    }
+}
+
+/* Define the hide-menu-animation */
+
+
+
+/* for mobile phones */
+@media screen and (max-width:768px){
+    .container{
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+    aside{
+        position: fixed;
+        left: -100%;
+        background: var(--color-white);
+        width: 18rem;
+        z-index: 3;
+        box-shadow: 1rem 3rem 4rem var(--color-light);
+        height: 100vh;
+        padding-right: var(--card-padding);
+        display: none;
+        animation: showMenu 400ms ease forwards;
+    }
+    @keyframes showMenu {
+        to{
+            left: 0;
+        }
+    }
+
+
+    aside .sidebar h3{
+        display: inline;
+    }
+    aside .sidebar a{
+        width: 100%;
+        height: 3.4rem;
+    }
+    aside .sidebar a:last-child{
+        position: absolute;
+        bottom: 5rem;
+    }
+    aside .close{
+        display: inline-block;
+        cursor: pointer;
+        position: absolute;
+        right: 25px;
+    }
+
+    main{
+        margin-top: 8rem;
+        padding: 0 1rem;
+    }
+    main .recent-orders{
+        position: relative;
+        margin: 3rem 0 0 0;
+        width: 100%;
+    }
+    main .recent-orders table{
+        width: 100%;
+        margin: 0;
+    }
+    .right{
+        width: 94%;
+        margin: 0 auto 4rem;
+    }
+    .right .top{
+        position: fixed;
+        top: 0;
+        left: 0;
+        align-items: center;
+        justify-content: right;
+        padding: 0 0.8rem;
+        height: 4.6rem;
+        background: var(--color-white);
+        width: 100%;
+        margin: 0;
+        z-index: 2;
+        box-shadow: 0 1rem 1rem var(--color-light);
+    }
+    .right .top .theme-toggler{
+        width: 4.4rem;
+        position: absolute;
+        left: 66%;
+    }
+    .right .profile .info{
+        display: none;
+    }
+    .right .top button{
+        display: inline-block;
+        background: transparent;
+        cursor: pointer;
+        color: var(--color-dark);
+        position: absolute;
+        left: 1rem;
+    }
+    .right .top button span{
+        font-size: 2rem;
+    }
+
+
+
+    main table thead tr th:nth-child(2),
+    main table thead tr th:nth-child(3),
+    main table thead tr th:nth-child(4){
+        display: none;
+    }
+
+    main table tbody tr td:nth-child(2),
+    main table tbody tr td:nth-child(3),
+    main table tbody tr td:nth-child(4){
+        display: none;
+    }
+
+    main .recent-orders table{
+        text-align: left;
+    }
+   
+}
+
+
+
+
+
+
+/* ADD PRODUCT PAGE DESIGN STARTS HERE  */
+/* Input Fields */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-primary); /* Border color */
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500; /* Font weight for the entered text */
+  background-color: var(--color-background); /* Background color */
+  color: var(--color-dark);
+  caret-color: var(--color-primary); /* Color of the caret */
+}
+  
+  /* Apply a different font weight to the placeholder text */
+  input::placeholder {
+    font-weight: 300; /* Font weight for the placeholder text */
+  }
+  
+
+input[type="radio"] {
+    appearance: auto;
+  }  
+
+/* Style for radio buttons */
+input[type="radio"] {
+    appearance: none; /* Hide the default radio button */
+    width: 15px; /* Set the width of the custom radio button */
+    height: 15px; /* Set the height of the custom radio button */
+    border-radius: 50%; /* Make the custom radio button round */
+    border: 2px solid var(--color-primary); /* Border color of the custom radio button */
+    background-color: var(--color-background); /* Background color of the custom radio button */
+  }
+  
+  /* Style for checked radio buttons */
+  input[type="radio"]:checked {
+    background-color: var(--color-primary); /* Background color of the checked radio button */
+  }
+  
+
+input[type="radio"],
+input[type="checkbox"] {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+textarea {
+    resize: none; /* Disable resizing */
+  }
+  
+
+/* Style for select element */
+select {
+    color:var(--color-dark); /* Font color for selected option */
+  }
+
+  
+/* Style for labels if needed */
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+
+
+.container2{
+    display: grid;
+    width: 96%;
+    margin: 0 auto;
+    gap: 1.8rem;
+    grid-template-columns: 14rem auto;
+}
+
+.main-container .top{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 50px;
+}
+
+.form-container{
+    background: var(--color-white);
+    margin-top: 30px;
+    width: 95%;
+    min-width: 400px;
+    padding: 35px 5%;
+    transform: translate(-50% -50%);
+    left: 50%;
+    top: 50%;
+    border-radius: var(--card-border-radious);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 30px;
+}
+
+.form-container h2{
+    text-align: center;
+}
+
+.form-container p{
+    position: relative;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.form-container form{
+    width: 100%;
+    position: relative;
+    margin: 30px auto 0 auto;
+}
+
+.form-container .row{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    grid-gap: 20px 30px;
+    margin-bottom: 20px;
+}
+
+
+
+/* mobile responsiveness container2 */
+@media screen and (max-width:768px){
+    .form-container{
+        margin-top: 100px;
+        min-width: 90vw;
+        margin-left: 8%;
+        padding: 35px 20%;
+    }
+}
+
+@media screen and (max-width:1200px){
+    .container2 {
+        grid-template-columns: 7rem auto;
+    }
+}
+
+/* imge upload  */
+.form-element {
+    position: relative;
+    width:150px;
+    height:150px;
+    box-shadow:var(--box-shadow);
+    background-color: var(--color-background);
+    border: 1px solid var(--color-primary);
+  }
+.form-element input {
+    display:none;
+  }
+.form-element img {
+    width:150px;
+    height:150px;
+    object-fit:cover;
+    top: 0; /* Position from top */
+    left: 0; /* Position from left */
+    cursor: pointer;
+  }
+ .form-element div {
+    position:absolute;
+    height:40px;
+    margin-top:-40px;
+    background-color: rgba(115, 128, 236, 0.5);
+    text-align:center;
+    line-height:40px;
+    font-size:13px;
+    color:#fff;
+    font-weight:600;
+    width: 100%;
+    overflow: hidden;
+    bottom: 0;
+    cursor: pointer;
+}
+ .form-element div span {
+    font-size:40px;
+  }
+
+.img-row{
+    display: flex;
+    justify-content: space-between;
+  }
+
+.img-column{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.row .submit{
+    margin-top: 20px;
+}
+
+
+
+
+/* MANAGE PRODUCTS PAGE DESIGN STARTS HERE  */
+.table-header,
+.table-pagination{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--color-background);
+    border-radius: var(--border-radious-2);
+}
+
+.table-pagination{
+    justify-content: center;
+}
+
+.table-pagination a{
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 10px;
+    border-radius: var(--border-radious-1);
+    margin: 0 5px;
+}
+
+.table-pagination .arrow{
+    padding: 8px 20px 3px 20px;
+}
+
+.table-pagination .muted{
+    color: var(--color-dark-varient);
+    border: 1px solid var(--color-primary);
+    background: var(--color-background);
+}
+
+.table h3{
+    font-size: 15px;
+}
+
+.table-section{
+    padding: 20px 0;
+    overflow-x: auto;
+}
+
+.table-section table{
+    border-collapse: collapse;
+}
+
+.table-section .edit{
+    color: var(--color-success);
+    margin-right: 5px;
+}
+
+.table-section .delete{
+    color: var(--color-danger);
+}
+
+table img{
+    display: block;
+    margin: 10px auto;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: transparent;
+   
+}
+
+.table-section td{
+padding:5px 22px;
+}
+
+.order-table td{
+    padding: 10px 10px;
+}
+
+.table-section td:last-child {
+    white-space: nowrap; /* Keeps content of the last td in a single line */
+    padding-right: 0;
+}
+
+.table-section td:first-child{
+    padding-left: 10px;
+}
+
+
+.table-section tr:hover td{
+    background-color: var(--color-background);
+}
+
+/* manage order select option  */
+.order-filter {
+    background-color: var(--color-primary);
+    color: #fff;
+    font-size: 15px;
+    padding-left: 15px;
+    margin-bottom: 0;
+}
+
+.order-filter option{
+    background-color: var(--color-primary);
+    color: #fff;
+    padding:10px;
+}
+
+
+
+
+
+/* =======login form style========  */
+
+.login-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 0 20px; /* Added padding for spacing */
+  }
+  
+  .login-info {
+    flex: 1; /* Occupy remaining space */
+    text-align: center;
+  }
+  
+  .login-form {
+    flex: 1; /* Occupy remaining space */
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Initially take full width */
+    max-width: 400px; /* Limiting the max-width */
+    margin: 0 auto; /* Center the form horizontally */
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input {
+    width: calc(100% - 20px); /* Subtract padding from width */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+
+  @media screen and (max-width: 450px) {
+    .login-form {
+      max-width: 100%; /* Set back to full width on smaller screens */
+    }
+  }
+  
+
+
+  /* ========== update order page============ */
+
+.update-order-tbl td{
+    text-align: start;
+}  
+
+.update-order-tbl td:nth-child(1){
+    width: 200px;
+    font-weight: 600;
+}
+
+
+  .update-order-btn{
+    margin-top: 30px;
+  }
+
+  .status-select{
+    margin: 0;
+    width: 150px;
+  }
+  table {
+    
+}
+
+th, td {
+    border-bottom: 1px solid red;
+}
+
+      </style>
+</head>
 <body>
       
     <div class="container"> 

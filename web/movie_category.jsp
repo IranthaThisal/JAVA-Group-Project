@@ -23,6 +23,17 @@
         response.sendRedirect("admin_login.jsp");
     }
  %>
+<%@ page import="java.sql.*" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+     <%
+       HttpSession session1 = request.getSession(false);
+    
+    
+      if (session1 == null || session1.getAttribute("user_id") == null) {
+       
+        response.sendRedirect("admin_login.jsp");
+    }
+ %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1313,7 +1324,5 @@ th, td {
     </div>
     
 
-    </body>
-</html>
     </body>
 </html>

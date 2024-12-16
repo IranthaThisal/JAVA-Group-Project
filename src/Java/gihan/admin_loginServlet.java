@@ -1,87 +1,72 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package gihan;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.PreparedStatement;
+import java.sql.*;
+import javax.servlet.http.HttpSession;
 
-/**
- *
- * @author Sasinima
- */
-@WebServlet(urlPatterns = {"/admin_loginServlet"})
+
 public class admin_loginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet admin_loginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet admin_loginServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        
+        try{
+        
+             //build connection
+             // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                //validation
+                String query1 = "SELECT * FROM users WHERE email = ? AND password = ? ";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                
+                ps1.setString(1, email);
+                ps1.setString(2, password);
+                
+                ResultSet rs = ps1.executeQuery();
+                
+                if(rs.next()){
+                    
+                    int id = rs.getInt("id");
+                    String first_name=rs.getString("first_name");
+                    
+                    //session create
+                HttpSession session1 = request.getSession();
+                session1.setAttribute("user_id", id);
+                session1.setAttribute("user_name", first_name);
+                session1.setMaxInactiveInterval(30 * 60);
+                
+                    response.sendRedirect("dashboard_home.jsp");
+                }
+                else{
+                
+                    response.sendRedirect("admin_login.jsp?error=Invalid user name and password");
+                }
+        }
+        catch(Exception e){
+        
+            out.println(e);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -1,87 +1,90 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package gihan;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Sasinima
- */
-@WebServlet(urlPatterns = {"/admin_registerServlet"})
+
 public class admin_registerServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet admin_registerServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet admin_registerServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String email = request.getParameter("mail");
+        String pwd = request.getParameter("password");
+        out.println(email);
+        
+        
+        try{
+        
+            // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                //email validation from server
+                String query1 = "SELECT * FROM admin WHERE email = ?";
+                PreparedStatement ps1 = conn.prepareStatement(query1);
+                
+                ps1.setString(1, email);
+                
+                ResultSet result = ps1.executeQuery();
+                
+                if(result.next()){
+                
+                   out.println("<script>");
+                out.println("alert('Email Already Taken!');");
+                out.println("window.location.href = 'admin.jsp';"); 
+                out.println("</script>");
+                }
+                else{
+                
+                    
+                String query2 = "INSERT INTO admin(first_Name,last_name,email,password) VALUES (?, ?,?,?)";
+                PreparedStatement ps = conn.prepareStatement(query2);
+                
+                // Insert Query
+               
+                ps.setString(1, fname);
+                ps.setString(2, lname);
+                ps.setString(3, email);
+                ps.setString(4, pwd);
+
+                // Execute Update
+                int x = ps.executeUpdate();
+
+                // Output Result
+                if (x > 0) {
+                    out.println("<script>");
+                out.println("alert('Admin Registered Successfully!');");
+                out.println("window.location.href = 'admin.jsp';"); 
+                out.println("</script>");
+                } else {
+                    out.println("Error");
+                }
+                }
+
+        }
+        catch(Exception e){
+        
+            out.println(e);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

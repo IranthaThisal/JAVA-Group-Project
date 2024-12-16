@@ -1,9 +1,3 @@
-<%-- 
-    Document   : booking
-    Created on : 7 Dec 2024, 15:14:41
-    Author     : Wasula Jayawardana
---%>
-
 <%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
@@ -12,21 +6,19 @@
     
       if (session1 == null || session1.getAttribute("user_id") == null) {
        
-        response.sendRedirect("admin_login.jsp");
+        response.sendRedirect("user_login.jsp");
     }
  %>
-
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABC Cinema</title>
+    <title>sportexpert</title>
     <!-- MATERIAL CDN  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
       rel="stylesheet">
 
-    <style>
+      <style>
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 /* ROOT VARIABLES  */
@@ -1138,82 +1130,291 @@ padding:5px 22px;
     width: 150px;
   }
       </style>
-      
 </head>
 <body>
-<% 
-        // Fetch data from URL parameters
-        String admin_id_para = request.getParameter("admin_id");
-%>     
-
-<%
-                try {
+     <%
+ 
+          
+             Integer userId = (Integer) session1.getAttribute("user_id");
+             String user_name = (String) session1.getAttribute("user_name");
+         
+                
+                
+    
+    try {
                 // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                int admin_id = Integer.parseInt(admin_id_para);
                 
                // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
-                //email validation from server
-                String query1 = "SELECT * FROM admin WHERE id = ?";
-                PreparedStatement ps1 = conn.prepareStatement(query1);
-                ps1.setInt(1, admin_id);
+                String query = "SELECT id,first_name,email FROM users WHERE id = ? ";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setInt(1, userId);
                 
-                ResultSet result1 = ps1.executeQuery();
+                ResultSet rs = ps.executeQuery();
                 
-                while(result1.next()){
-                String fname = result1.getString("first_name");
-                String lname = result1.getString("last_name"); 
-                String email = result1.getString("email");
-                String pwd = result1.getString("password");
-                String id = result1.getString("id");
+                if(rs.next()){
                 
-
-
-
-
-%>
+                int uID = rs.getInt("id");
+                String full_name = rs.getString("first_name");
+                String email = rs.getString("email");
+         
+                
+                
+                String movie_id_para = request.getParameter("movie_id");
+                
+                     String query1;
+                     PreparedStatement ps1;
+                
+                    int movie_id = Integer.parseInt(movie_id_para);
+                    query1 = "SELECT * FROM movie WHERE movie_id = ?";
+                    ps1 = conn.prepareStatement(query1);
+                    ps1.setInt(1, movie_id);
+                   
+                    ResultSet result = ps1.executeQuery();
+                    
+                    if(result.next()){
+                    
+                String image = result.getString("image");
+                String trailer = result.getString("trailer");
+                String name = result.getString("name");
+                String title = result.getString("title");
+                String date = result.getString("date");
+                String release = result.getString("release_date");
+                String description = result.getString("description");
+                String duration = result.getString("duration");
+                String imdb = result.getString("imdb");
+                String movieId = result.getString("movie_id");
+                String time = result.getString("time");
+                String location = result.getString("location");
+                
+                 
+                
         
-        <div class="login-container">
-          <form action="adminUpdateServlet?admin_id=<%=id%>" method="POST" id="loginForm" class="login-form">
-          <div class="login-info">
-            <h2>Admin Update</h2><br>
 
-          </div>
-          <br>
-            <div class="form-group">
-              <label for="username">First Name:</label>
-              <input type="text" id="username" name="fname" placeholder="Enter Username" required value="<%=fname%>">
-            </div>
-          <div class="form-group">
-              <label for="username">Last Name:</label>
-              <input type="text" id="username" name="lname" placeholder="Enter Username" required value="<%=lname%>">
-            </div>
-          <div class="form-group">
-              <label for="username">E Mail:</label>
-              <input type="email" id="username" name="mail" placeholder="Enter Username" required value="<%=email%>" readonly="">
-            </div>
-            <div class="form-group">
-              <label for="password">Password:</label>
-              <input type="password" id="password" name="password" placeholder="Enter Password" required value="<%=pwd%>">
-            </div>
-            <div class="login-info">
-                
-                <a href="admin.jsp"class="submit" style="background-color: blue;">Back</a>
-                <button type="submit" name="submit" class="submit">Update</button>
-            </div>
-          </form>
-        </div>
+%>  
+      
+    <div class="container"> 
+
+
+            <!-- add products form starts here -->
+            <div class="form-container">
+                <h2>Add Booking</h2>
+                <p>Fill all the required fields below</p>
+                <form action="addBookingServlet?movie_id=<%= movieId %>" method="POST">
+                    
+                    <div class="row">
+                        <div class="column">
+                            <label for="title">Full Name</label>
+                            <input type="text" name="name" id="title" value="<%= full_name %>" required>
+                        </div>
+                        
+                        <div class="column">
+                            <label for="sub-title">E Mail</label>
+                            <input type="text" name="mail" id="sub-title" value="<%= email %>">
+                        </div>  
+                    </div>
+
+                    <div class="row">
+
+                        
+                        <div class="column">
+                            <label for="sub-title">Movie Name</label>
+                            <input type="text" name="movie_name" id="sub-title" value="<%= name %>">
+                        </div>  
+
+                    <div class="column">
+                            <label for="title">Movie Date</label>
+                            <input type="text" name="release" id="title" value="<%= date %>" required>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <label for="price">Movie Time:</label>
+                        <input type="text" name="time"  min="0" id="price" value="<%= time %>" required>
+                    </div>
+
+                    <div class="column">
+                        <label for="discount">Location</label>
+                        <input type="text" name="location"  min="0"  id="discount" value="<%= location %>">
+                    </div>  
+                </div>
+                     
+                    <div class="row">
+    <div class="column">
+        <label for="title">Tickets Type :</label>
+        <%
+            try{
             
-        </body>
-        </html>
+                    // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                     String query2;
+                     PreparedStatement ps2;
+                
+                    
+                    query2 = "SELECT * FROM tickets";
+                    ps2 = conn1.prepareStatement(query2);
+                   
+                    ResultSet result1 = ps2.executeQuery();
+                    int count1 = 0;
+                    while(result1.next()){
+                    count1 = count1 + 1;
+                String type = result1.getString("type");
+                int tprice = result1.getInt("price");
+                int tid = result1.getInt("id");
+        %>
+        <input type="text" name="ticket_type<%= count1 %>" value="<%= type %> -> <%= tprice %>" readonly>
+        
+        <input type="hidden" name="ticket_price<%= count1 %>" value="<%= tprice %>" id="ticket_price<%= count1 %>">
+        
+        <input type="hidden" name="ticket_id<%= count1 %>" value="<%= tid %>" >
+        
+        <%
+    
+    
+        }
+          }
+          catch(Exception e){
+          out.println(e);
+         }
+ 
+    %>
+    </div> 
+    <div class="column">
+        <label for="price">No of Tickets :</label>
+        <%
+            try{
+            
+                    // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                     String query2;
+                     PreparedStatement ps2;
+                
+                    
+                    query2 = "SELECT * FROM tickets";
+                    ps2 = conn1.prepareStatement(query2);
+                   
+                    ResultSet result1 = ps2.executeQuery();
+                    
+                    int count = 0;
+                    while(result1.next()){
+                    count = count + 1;
+                    String type = result1.getString("type");
+                    int tprice = result1.getInt("price");
+        %>
+        <input type="number" name="ticket_count<%= count %>" value="0" id="ticket_count<%= count %>">
+            
+    
+    <%
+    
+    
+        }
+          }
+          catch(Exception e){
+          out.println(e);
+         }
+ 
+    %>
+    </div>  
+</div>
+ 
+                <div class="row" style="border-top: 1px solid rgb(0, 255, 89);">
+                        <div class="column">
+                            
+                        </div>
+                        <div class="column" style="border-bottom: 3px solid rgb(0, 255, 89); padding-top: 10px;">
+                            <label style="font-size: 15px;" >Total :<span style="padding-left: 10px;" id="display">0/=</span></label>
+                        </div>
+                   <div class="row">
+                    <div class="column">
+                        <a href="home_page.jsp" class="submit"style="background-color:blue;" >Back</a>
+                        <input class="submit" type="submit" name="submit" value="Next">
+                    </div>
+                </div>
+                    
 
-<%
+            </form>
 
-           }
-}
-             catch(Exception e){
-                    out.println("error");
-            }
-%>
+
+          
+
+
+
+      
+
+        </div>
+
+    </div>
+    
+    
+    <%
+    
+    }
+        }
+          }
+          catch(Exception e){
+          out.println(e);
+         }
+ 
+    %>
+    <%
+    try{
+            //build connection
+             // Load MySQL Driver
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                
+               // Connect to Database
+                Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
+                
+                String query = "SELECT COUNT(*) AS ticketCount FROM tickets";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+               int ticketCount = 0;
+               if (rs.next()) {
+                   ticketCount = rs.getInt("ticketCount");
+         %>    
+         
+     <script>
+    // Calculate total when ticket counts change
+    document.addEventListener("input", function () {
+        var ticketCount = <%= ticketCount %>; // Number of tickets from server
+        var sum = 0;
+
+        // Loop through ticket inputs and calculate total
+        for (var i = 1; i <= ticketCount; i++) {
+            var ticketPrice = parseInt(document.getElementById("ticket_price" + i).value, 10);
+            var ticketCountValue = parseInt(document.getElementById("ticket_count" + i).value, 10) || 0;
+
+            sum += ticketPrice * ticketCountValue;
+        }
+
+        // Update the total display
+        document.getElementById("display").textContent = sum+"/=";
+    });
+</script>
+         
+        <%
+        }
+
+           
+
+          
+    }
+               
+              
+        catch(Exception e){
+        
+            out.println(e);
+        }
+ %>       
+    
+    </body>
+</html>

@@ -18,7 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FOODIES</title>
+    <title>multiflex</title>
     <style>
         * {
             margin: 0px;
@@ -28,8 +28,9 @@
         }
 
         body {
-            background: rgb(42, 42, 42);
             margin: 0 auto;
+            overflow-y:scroll;
+            background:#222;
         }
         :root {
             --primary-color: white;
@@ -163,7 +164,7 @@
     }
 }
 
-        /* responsive */
+
         @media  screen and (max-width:680px){
             .order_item{
             width: 450px;
@@ -225,65 +226,110 @@
         .second tr th{
             text-align: left;
         }
-        /* General Header Styles */
-header {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    background-color:black;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+ header:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
 }
 
-/* Logo Styles */
-header .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-transform: uppercase;
-    padding: 15px 20px;
-    cursor: pointer;
+
+header nav{
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 100px;
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:99;
+  width:100%;
+  background-color:white;
+  
 }
 
-header .logo span {
-    color: red;
+
+header nav .fa{
+  cursor:pointer;
+  display:none;
 }
 
-/* Navigation Menu */
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
+
+header nav .fa:hover{
+  color:#DB0000;
 }
 
-/* Navigation List */
-nav ul {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
+.nav{
+  background:#fff;
+  color:#000;
+  transition:background .5s;
+  
 }
 
-nav ul li {
-    margin: 0 15px;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
+.navBlack{
+  background:#000;
+  color:#fff;
+  transition:background .5s;
+  
+}
+nav ul li a{
+    text-decoration:none;
+    color:red;
+    font-weight:bold;
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s ease;
+header nav .logo{
+  font-weight:700;
+  font-size:1.5em;
 }
 
-nav ul li a:hover {
-    color: red;
+header nav .logo span{
+  color:#DB0000;
 }
 
-/* Responsive Menu Icon */
+header nav ul .marker{
+  background:#DB0000;
+  width:40px;
+  height:2px;
+  position:absolute;
+  bottom:-5px;
+  left:0;
+  border-radius:20px;
+}
+
+
+header nav ul{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  text-transform:uppercase;
+  list-style:none;
+  position:relative;
+}
+
+
+header nav ul li{
+  cursor:pointer;
+}
+
+
+header nav ul li span{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+header nav ul li img{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  object-fit:cover;
+}
+
 #menu {
     display: none;
     font-size: 24px;
@@ -291,7 +337,7 @@ nav ul li a:hover {
     cursor: pointer;
 }
 
-/* Responsive Styling */
+
 @media screen and (max-width: 680px) {
     nav ul {
         display: none;
@@ -317,7 +363,7 @@ nav ul li a:hover {
         display: block;
     }
 }
-/--- Footer Styles ---/
+
 footer {
   background: #222;
   color: #fff;
@@ -383,7 +429,7 @@ footer .socail-box .fa:hover {
   color: #DB0000;
 }
 
-/* Footer Responsive Styles */
+
 @media (min-width: 720px) and (max-width: 1023px) {
   footer {
     padding: 40px 50px;
@@ -411,24 +457,29 @@ footer .socail-box .fa:hover {
 <body>
     <header>
     <nav>
-    <p class="logo">
-      multi<span>flex<span>
+    <p class="logo" id="logo">
+        <span style="color: black;"> <span style="color:black;">multi</span><span>flex</span>
     </p>
       
       <i class="fa fa-bars" id="menu"></i>
       
     <ul id="menu-box">
       <div class="marker"></div>
-      <li>Main</li>
-  <%
+      <li><a href="home_page.jsp">Main</a></li>
+      
+     <%
+       
     String x;
     String link;
     String link1;
     String u_name;
+    String account_link;
+    String account_link1;
     
       if (session1 == null || session1.getAttribute("user_id") == null) {
         x = "Login"; 
         link = "user_login.jsp";
+        account_link = "user_login.jsp";
         link1 = "user_login.jsp";
         u_name = "";
     }
@@ -437,16 +488,17 @@ footer .socail-box .fa:hover {
     Integer userId = (Integer) session1.getAttribute("user_id");
     String user_name = (String) session1.getAttribute("user_name");
      x = "Logout"; 
-     link = "user_logout.jsp";
+     link = "userLogout";
      link1 = "order.jsp";
-     u_name = "Hi ,"+ user_name;
+     account_link = "user_account.jsp";
+     u_name = "Account";
           }
     
     %>
     
-       <li><b><a href="<%= link1 %>" style="text-decoration:none;color:white;">Bookings</b></a></li>
-      <li><%= u_name %></li>
-      <li><b><a href="<%= link %>" style="text-decoration:none;color:red;"><%= x %></b></a></li>
+       <li><b><a href="<%= link1 %>">Bookings</b></a></li>
+<li><a href="<%= account_link %>">Account</a></li>
+      <li><b><a href="<%= link %>"><%= x %></b></a></li>
     </ul>
       
   </nav>
@@ -458,10 +510,8 @@ footer .socail-box .fa:hover {
              String user_name = (String) session1.getAttribute("user_name");
          
 
-                // Load MySQL Driver
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 
-               // Connect to Database
                 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test1login", "root", "");
                 
                 String query = "SELECT * FROM booking WHERE user_id = ? ";

@@ -5,9 +5,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>multiflex</title>
         <style>
-                      
 
 *{
   margin:0;
@@ -93,6 +92,7 @@ header nav{
   left:0;
   z-index:99;
   width:100%;
+  background-color:white;
   
 }
 
@@ -119,6 +119,11 @@ header nav .fa:hover{
   color:#fff;
   transition:background .5s;
   
+}
+nav ul li a{
+    text-decoration:none;
+    color:red;
+    font-weight:bold;
 }
 
 header nav .logo{
@@ -521,8 +526,6 @@ section  .show button:hover{
 }
 
 
-
-
 footer{
   background:#222;
   color:#fff;
@@ -892,26 +895,24 @@ section .movie-ticket-book button{
     </head>
     <body>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!---font icon CDN----->
+
 
  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-<!----carousel cdn--->
 
-
-<!----movie site template---->
 
 <header>
     <nav>
-    <p class="logo">
+    <p class="logo" id="logo">
+        <span style="color: black;"> multi<span><span>flex</span>
     </p>
       
       <i class="fa fa-bars" id="menu"></i>
       
     <ul id="menu-box">
       <div class="marker"></div>
-      <li>Main</li>
+      <li><a href="home_page.jsp">Main</a></li>
       
      <%
        HttpSession session1 = request.getSession(false);
@@ -919,10 +920,13 @@ section .movie-ticket-book button{
     String link;
     String link1;
     String u_name;
+    String account_link;
+    String account_link1;
     
       if (session1 == null || session1.getAttribute("user_id") == null) {
         x = "Login"; 
         link = "user_login.jsp";
+        account_link = "user_login.jsp";
         link1 = "user_login.jsp";
         u_name = "";
     }
@@ -931,16 +935,17 @@ section .movie-ticket-book button{
     Integer userId = (Integer) session1.getAttribute("user_id");
     String user_name = (String) session1.getAttribute("user_name");
      x = "Logout"; 
-     link = "user_logout.jsp";
+     link = "userLogout";
      link1 = "order.jsp";
-     u_name = "Hi ,"+ user_name;
+     account_link = "user_account.jsp";
+     u_name = "Account";
           }
     
     %>
     
-       <li><b><a href="<%= link1 %>" style="text-decoration:none;color:white;">Bookings</b></a></li>
-      <li><%= u_name %></li>
-      <li><b><a href="<%= link %>" style="text-decoration:none;color:red;"><%= x %></b></a></li>
+       <li><b><a href="<%= link1 %>">Bookings</b></a></li>
+<li><a href="<%= account_link %>">Account</a></li>
+      <li><b><a href="<%= link %>"><%= x %></b></a></li>
     </ul>
       
   </nav>
@@ -1007,7 +1012,7 @@ section .movie-ticket-book button{
       </div>
       
     </div>
-    <!---slider--->
+   
     
 </header>
 
@@ -1023,7 +1028,7 @@ section .movie-ticket-book button{
     </div>
       <a href="booking.jsp?movie_id=<%= movie_id %>"><button>Buy ticket</button></a>
   </div>
-  <!---movie-ticket-book-->
+ 
   
  <%
                    }
@@ -1065,7 +1070,7 @@ section .movie-ticket-book button{
     </div>
     
   </div>
-  <!----filter-search-box---->
+
   
   
   <div class="movie-card-section">
@@ -1124,7 +1129,7 @@ section .movie-ticket-book button{
    
     
   </div>
-  <!---movie-card--->
+  
   
   <div class="show">
     <div class="show-bar">
@@ -1132,7 +1137,7 @@ section .movie-ticket-book button{
     </div>
      <button>Show more</button>
   </div>
-    <!---bar--->
+    
   
   
 </section>
@@ -1142,13 +1147,12 @@ section .movie-ticket-book button{
         Integer userId = (Integer) session1.getAttribute("user_id");
         %>
         <form action="submitCommentServlet?user_id=<%= userId %>" method="post">
-            <textarea 
+            <input 
                 name="comment" 
                 rows="5" 
                 style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #fe0000; border-radius: 5px;background-color: #000;color: #ccc;" 
                 placeholder="Write your comment here..." 
                 required>
-            </textarea>
             <button 
                 type="submit" 
                 style="margin-top: 10px; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #ff000d; border: none; border-radius: 5px; cursor: pointer;">
@@ -1166,7 +1170,7 @@ section .movie-ticket-book button{
   </div>
   
   <ul>
-    <li>main</li>
+      <li><a href="#logo" style="color: gray; text-decoration: none;">main</a></li>
     <li>schedlues</li>
     <li>tickets</li>
     <li>news</li>
@@ -1183,9 +1187,9 @@ section .movie-ticket-book button{
 </footer>
 
 <script>
-    //js power
+   
 
-//indicator
+
 let marker = document.querySelector('.marker');
 let items = document.querySelectorAll('nav ul li');
 
@@ -1198,26 +1202,28 @@ function indicator(e){
 items.forEach(link =>{
   link.addEventListener("click",(e)=>{
     indicator(e.target);
-  })
-})
+  });
+});
 
 
 
-//for menu scroll
 let nav = document.querySelector('nav');
 let ul = document.querySelector('nav ul');
+let link = document.querySelectorAll('nav ul li a');
 
 window.addEventListener("scroll",()=>{
   if(window.pageYOffset >= 20){
-    nav.classList.add('nav');
+    //nav.classList.add('navBlack');
+    
   }else{
-    nav.classList.remove('nav');
+    //nav.classList.remove('nav');
+    //link.classList.remove('nav');
   }
   
     if(window.pageYOffset >= 700){
-    nav.classList.add('navBlack');
+    //nav.classList.add('navBlack');
   }else{
-    nav.classList.remove('navBlack');
+    //nav.classList.remove('navBlack');
   }
 });
 

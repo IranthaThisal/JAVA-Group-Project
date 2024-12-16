@@ -1,18 +1,4 @@
-<%-- 
-    Document   : movie
-    Created on : Dec 11, 2024, 1:53:58 PM
-    Author     : sandr
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        \<%@ page import="java.sql.*" %>
+<%@ page import="java.sql.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
      <%
        HttpSession session1 = request.getSession(false);
@@ -1318,7 +1304,5 @@ th, td {
     </div>
     
 
-    </body>
-</html>
     </body>
 </html>

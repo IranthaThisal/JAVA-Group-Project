@@ -15,7 +15,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>multiflex</title>
+    <title>Multiflex</title>
     <!-- MATERIAL CDN  -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
       rel="stylesheet">
@@ -23,7 +23,7 @@
       <style>
          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-/* ROOT VARIABLES  */
+
 :root{
     --color-primary: #ff0000;
     --color-danger: #ff7782;
@@ -57,7 +57,7 @@
 
 }
 
-/* ---------dark theme variables--------- */
+
 .dark-theme-variables{
     --color-background:#181a1e;
     --color-white:#202528;
@@ -174,7 +174,7 @@ b{
     color: var(--color-warning);
 }
 
-/* button  */
+
 .submit{
     padding: 10px 20px;
     font-size: 15px;
@@ -191,7 +191,6 @@ b{
 }
 
 
-/* ============ SIDE BAR ============= */
 aside{
     height: 100vh;
 }
@@ -274,7 +273,6 @@ aside .sidebar .message-count{
 }
 
 
-/* ============ MAIN ============= */
 
 main{
     margin: 1.4rem;
@@ -393,7 +391,7 @@ main .recent-orders h2{
     margin-bottom: 0.8rem;
 }
 
-/* table style for all pages  */
+
 table{
     background: var(--color-white);
     width: 100%;
@@ -436,7 +434,6 @@ main .recent-orders a{
 }
 
 
-/* ============ RIGHT ============= */
 .right{
     margin-top: 1.4rem;
 }
@@ -483,7 +480,7 @@ main .recent-orders a{
     text-align: right;
 }
 
-/* -----recent updates------- */
+
 .right .recent-updates{
     margin-top: 1rem;
 }
@@ -512,7 +509,6 @@ main .recent-orders a{
 }
 
 
-/* -----sales analytics------- */
 .right .sales-analytics{
     margin-top: 2rem;
 }
@@ -577,15 +573,8 @@ main .recent-orders a{
 
 .right .sales-analytics .add-product:hover{
     gap: 2rem;
-    /* background: var(--color-primary);
-    color: white; */
 }
 
-
-
-/* ========== MEDIA QUERY ========== */
-
-/* for tablets */
 @media screen and (max-width:1200px) {
     .container{
         width: 94%;
@@ -625,11 +614,7 @@ main .recent-orders a{
     }
 }
 
-/* Define the hide-menu-animation */
 
-
-
-/* for mobile phones */
 @media screen and (max-width:768px){
     .container{
         width: 100%;
@@ -748,8 +733,6 @@ main .recent-orders a{
 
 
 
-/* ADD PRODUCT PAGE DESIGN STARTS HERE  */
-/* Input Fields */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -760,20 +743,20 @@ select {
   width: 100%;
   padding: 0.5rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--color-primary); /* Border color */
+  border: 1px solid var(--color-primary); 
   border-radius: 4px;
   box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
-  font-weight: 500; /* Font weight for the entered text */
-  background-color: var(--color-background); /* Background color */
+  font-weight: 500; 
+  background-color: var(--color-background); 
   color: var(--color-dark);
-  caret-color: var(--color-primary); /* Color of the caret */
+  caret-color: var(--color-primary); 
 }
   
-  /* Apply a different font weight to the placeholder text */
+ 
   input::placeholder {
-    font-weight: 300; /* Font weight for the placeholder text */
+    font-weight: 300; 
   }
   
 
@@ -781,19 +764,19 @@ input[type="radio"] {
     appearance: auto;
   }  
 
-/* Style for radio buttons */
+
 input[type="radio"] {
-    appearance: none; /* Hide the default radio button */
-    width: 15px; /* Set the width of the custom radio button */
-    height: 15px; /* Set the height of the custom radio button */
-    border-radius: 50%; /* Make the custom radio button round */
-    border: 2px solid var(--color-primary); /* Border color of the custom radio button */
-    background-color: var(--color-background); /* Background color of the custom radio button */
+    appearance: none; 
+    width: 15px; 
+    height: 15px; 
+    border-radius: 50%; 
+    border: 2px solid var(--color-primary); 
+    background-color: var(--color-background); 
   }
   
-  /* Style for checked radio buttons */
+  
   input[type="radio"]:checked {
-    background-color: var(--color-primary); /* Background color of the checked radio button */
+    background-color: var(--color-primary); 
   }
   
 
@@ -804,17 +787,16 @@ input[type="checkbox"] {
 }
 
 textarea {
-    resize: none; /* Disable resizing */
+    resize: none; 
   }
   
 
-/* Style for select element */
+
 select {
-    color:var(--color-dark); /* Font color for selected option */
+    color:var(--color-dark); 
   }
 
   
-/* Style for labels if needed */
 label {
   display: block;
   margin-bottom: 0.5rem;
@@ -877,8 +859,6 @@ label {
 }
 
 
-
-/* mobile responsiveness container2 */
 @media screen and (max-width:768px){
     .form-container{
         margin-top: 100px;
@@ -894,7 +874,7 @@ label {
     }
 }
 
-/* imge upload  */
+
 .form-element {
     position: relative;
     width:150px;
@@ -949,9 +929,6 @@ label {
 }
 
 
-
-
-/* MANAGE PRODUCTS PAGE DESIGN STARTS HERE  */
 .table-header,
 .table-pagination{
     display: flex;
@@ -1027,7 +1004,7 @@ padding:5px 22px;
 }
 
 .table-section td:last-child {
-    white-space: nowrap; /* Keeps content of the last td in a single line */
+    white-space: nowrap; 
     padding-right: 0;
 }
 
@@ -1040,7 +1017,7 @@ padding:5px 22px;
     background-color: var(--color-background);
 }
 
-/* manage order select option  */
+
 .order-filter {
     background-color: var(--color-primary);
     color: #fff;
@@ -1057,10 +1034,6 @@ padding:5px 22px;
 
 
 
-
-
-/* =======login form style========  */
-
 .login-container {
     display: flex;
     flex-direction: row;
@@ -1068,23 +1041,23 @@ padding:5px 22px;
     align-items: center;
     height: 100vh;
     background-color: #f0f0f0;
-    padding: 0 20px; /* Added padding for spacing */
+    padding: 0 20px; 
   }
   
   .login-info {
-    flex: 1; /* Occupy remaining space */
+    flex: 1; 
     text-align: center;
   }
   
   .login-form {
-    flex: 1; /* Occupy remaining space */
+    flex: 1; 
     background-color: #fff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Initially take full width */
-    max-width: 400px; /* Limiting the max-width */
-    margin: 0 auto; /* Center the form horizontally */
+    width: 100%; 
+    max-width: 400px; 
+    margin: 0 auto; 
   }
   
   .form-group {
@@ -1098,7 +1071,7 @@ padding:5px 22px;
   }
   
   .form-group input {
-    width: calc(100% - 20px); /* Subtract padding from width */
+    width: calc(100% - 20px); 
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -1107,13 +1080,10 @@ padding:5px 22px;
 
   @media screen and (max-width: 450px) {
     .login-form {
-      max-width: 100%; /* Set back to full width on smaller screens */
+      max-width: 100%; 
     }
   }
   
-
-
-  /* ========== update order page============ */
 
 .update-order-tbl td{
     text-align: start;
@@ -1208,14 +1178,11 @@ padding:5px 22px;
 
 
 
-
-
-            <!-- add category -->
             <div class="form-container">
                 <h2>Add category</h2>
                 <p>Fill all the required fields below</p>
                 
-                <!-- add category form starts here -->
+
                 <form action="movieCategoryServlet" method="POST" >
                     <div class="row">
                         <div class="column">
@@ -1243,7 +1210,7 @@ padding:5px 22px;
                     </div>
                    </div>
                 </form>
-                <!-- add category form ends here -->
+
 
      
             </div>
